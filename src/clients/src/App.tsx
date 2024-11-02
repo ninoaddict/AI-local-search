@@ -40,7 +40,11 @@ const App = () => {
   const initialArray = generateSequentialArray(125);
   const indexPairs = generateRandomIndexPairs(125, 7500);
 
-  return <VideoPlayer initialArray={initialArray} indexPairs={indexPairs} />;
+  return (
+    <div>
+      <VideoPlayer initialArray={initialArray} indexPairs={indexPairs} />;
+    </div>
+  );
 };
 
 export default App;

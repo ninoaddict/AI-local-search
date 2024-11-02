@@ -2,12 +2,13 @@
 import { Button } from "./ui/button";
 import { Slider } from "./ui/slider";
 import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuGroup,
-} from "./ui/dropdown-menu";
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "./ui/select";
+import CubeState from "./cube-state";
 import { useState, useEffect } from "react";
 
 interface VideoPlayerProps {
@@ -21,11 +22,10 @@ export default function VideoPlayer({
 }: VideoPlayerProps) {
   const [currentMatrixIndex, setCurrentMatrixIndex] = useState(0);
   const [PrevMatrixIndex, setPrevMatrixIndex] = useState(0);
-
   const [currentMatrixData, setCurrentMatrixData] =
     useState<number[]>(initialArray);
   const [isPaused, setIsPaused] = useState(true);
-  const [playSpeed, setPlaySpeed] = useState(1);
+  const [playSpeed, setPlaySpeed] = useState<number>(1);
 
   useEffect(() => {
     let arrayCopy = [...currentMatrixData];
@@ -89,33 +89,15 @@ export default function VideoPlayer({
     setIsPaused((prevState) => !prevState);
   };
 
-  const getMatrixSlice = (matrix: number[], start: number, end: number) => {
-    return matrix.slice(start, end);
+  const handleSelectChange = (value: string) => {
+    const speedValue = parseFloat(value);
+    setPlaySpeed(speedValue);
   };
 
   return (
     <div>
       <p>CURRENT MATRIX: {currentMatrixIndex}</p>
-      <div className="flex flex-wrap gap-4">
-        {Array.from({ length: 5 }, (_, index) => (
-          <div
-            key={index}
-            className="text-black bg-[#88AAEE] grid grid-cols-5 grid-rows-5 gap-1 rounded-[5px] border-black border-2 p-5 max-w-[200px] h-[200px] flex-shrink-0"
-          >
-            {currentMatrixData.length > 0 &&
-              currentMatrixData
-                .slice(index * 25, (index + 1) * 25)
-                .map((num, innerIndex) => (
-                  <Button
-                    key={innerIndex}
-                    className="text-black bg-yellow-200 border-black border-2 w-[35px] h-[35px]"
-                  >
-                    {num}
-                  </Button>
-                ))}
-          </div>
-        ))}
-      </div>
+      <CubeState matrixData={currentMatrixData} />
 
       <Button onClick={prev}> PREV </Button>
       <Button onClick={next}> NEXT </Button>
@@ -129,32 +111,18 @@ export default function VideoPlayer({
         className="w-full mt-4"
       />
 
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <button className="px-4 py-2 mt-4 text-white bg-blue-500 rounded">
-            Select Speed
-          </button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuGroup>
-            <DropdownMenuItem onSelect={() => setPlaySpeed(0.1)}>
-              0.1
-            </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => setPlaySpeed(0.5)}>
-              0.5
-            </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => setPlaySpeed(1)}>
-              1
-            </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => setPlaySpeed(1.5)}>
-              1.5
-            </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => setPlaySpeed(10)}>
-              10
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <Select onValueChange={handleSelectChange} value={String(playSpeed)}>
+        <SelectTrigger>
+          <SelectValue placeholder="Select Speed" />
+        </SelectTrigger>
+        <SelectContent>
+          {[0.1, 0.5, 1, 1.5, 2, 5].map((speed) => (
+            <SelectItem key={speed} value={String(speed)}>
+              {speed}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
 
       <Button
         onClick={togglePause}
