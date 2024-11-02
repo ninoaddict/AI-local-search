@@ -1,12 +1,20 @@
 import React from "react";
 import logo from "./logo.svg";
-import "./App.css";
+// import "./App.css";
+import { Button } from "./components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./components/ui/dropdown-menu";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
@@ -19,6 +27,8 @@ function App() {
           HELOO!
         </a>
       </header>
+      <h1 className="text-5xl">asdlkjfasdf</h1>
+      <Button variant={"default"}>asdfasdljfaskjdlhflkjshdlkjahsdfkjh</Button>
     </div>
   );
 }
