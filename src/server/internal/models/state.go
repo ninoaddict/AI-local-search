@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"math/rand"
 	"time"
 )
@@ -207,82 +208,82 @@ func getAffectedArea(idx int) []int {
 	return res
 }
 
-func getAffectedRow(idx int) int {
-	i := idx / 25
-	j := (idx % 25) / 5
-	idxRow := 5*i + j
-	return idxRow
-}
+// func getAffectedRow(idx int) int {
+// 	i := idx / 25
+// 	j := (idx % 25) / 5
+// 	idxRow := 5*i + j
+// 	return idxRow
+// }
 
-func getAffectedCol(idx int) int {
-	i := idx / 25
-	k := idx % 5
-	idxCol := 25 + 5*i + k
-	return idxCol
-}
+// func getAffectedCol(idx int) int {
+// 	i := idx / 25
+// 	k := idx % 5
+// 	idxCol := 25 + 5*i + k
+// 	return idxCol
+// }
 
-func getAffectedTiang(idx int) int {
-	j := (idx % 25) / 5
-	k := idx % 5
-	idxTiang := 50 + 5*j + k
-	return idxTiang
-}
+// func getAffectedTiang(idx int) int {
+// 	j := (idx % 25) / 5
+// 	k := idx % 5
+// 	idxTiang := 50 + 5*j + k
+// 	return idxTiang
+// }
 
-func getAffectedDiagonal1(idx int) int {
-	i := idx / 25
-	j := (idx % 25) / 5
-	k := idx % 5
-	idxDiagonal1 := -1
-	if j == k {
-		idxDiagonal1 = 75 + i*2
-	} else if k == 4-j {
-		idxDiagonal1 = 75 + i*2 + 1
-	}
-	return idxDiagonal1
-}
+// func getAffectedDiagonal1(idx int) int {
+// 	i := idx / 25
+// 	j := (idx % 25) / 5
+// 	k := idx % 5
+// 	idxDiagonal1 := -1
+// 	if j == k {
+// 		idxDiagonal1 = 75 + i*5
+// 	} else if k == 4-j {
+// 		idxDiagonal1 = 75 + i*5 + 1
+// 	}
+// 	return idxDiagonal1
+// }
 
-func getAffectedDiagonal2(idx int) int {
-	i := idx / 25
-	j := (idx % 25) / 5
-	k := idx % 5
-	idxDiagonal2 := -1
-	if i == k {
-		idxDiagonal2 = 85 + j*2
-	} else if k == 4-i {
-		idxDiagonal2 = 85 + j*2 + 1
-	}
-	return idxDiagonal2
-}
+// func getAffectedDiagonal2(idx int) int {
+// 	i := idx / 25
+// 	j := (idx % 25) / 5
+// 	k := idx % 5
+// 	idxDiagonal2 := -1
+// 	if i == k {
+// 		idxDiagonal2 = 85 + j*5
+// 	} else if k == 4-i {
+// 		idxDiagonal2 = 85 + j*5 + 1
+// 	}
+// 	return idxDiagonal2
+// }
 
-func getAffectedDiagonal3(idx int) int {
-	i := idx / 25
-	j := (idx % 25) / 5
-	k := idx % 5
-	idxDiagonal3 := -1
-	if i == j {
-		idxDiagonal3 = 95 + k*2
-	} else if i == 4-j {
-		idxDiagonal3 = 95 + k*2 + 1
-	}
-	return idxDiagonal3
-}
+// func getAffectedDiagonal3(idx int) int {
+// 	i := idx / 25
+// 	j := (idx % 25) / 5
+// 	k := idx % 5
+// 	idxDiagonal3 := -1
+// 	if i == j {
+// 		idxDiagonal3 = 95 + k*5
+// 	} else if i == 4-j {
+// 		idxDiagonal3 = 95 + k*5 + 1
+// 	}
+// 	return idxDiagonal3
+// }
 
-func (state *State) getAffectedDiagonalSpace(idx int) int {
-	i := idx / 25
-	j := (idx % 25) / 5
-	k := idx % 5
-	idxDiagonalSpace := -1
-	if i == j && j == k {
-		idxDiagonalSpace = 105
-	} else if j == 4-i && i == k {
-		idxDiagonalSpace = 106
-	} else if j == k && i == 4-j {
-		idxDiagonalSpace = 107
-	} else if i == j && j == 4-k {
-		idxDiagonalSpace = 108
-	}
-	return idxDiagonalSpace
-}
+// func (state *State) getAffectedDiagonalSpace(idx int) int {
+// 	i := idx / 25
+// 	j := (idx % 25) / 5
+// 	k := idx % 5
+// 	idxDiagonalSpace := -1
+// 	if i == j && j == k {
+// 		idxDiagonalSpace = 105
+// 	} else if j == 4-i && i == k {
+// 		idxDiagonalSpace = 106
+// 	} else if j == k && i == 4-j {
+// 		idxDiagonalSpace = 107
+// 	} else if i == j && j == 4-k {
+// 		idxDiagonalSpace = 108
+// 	}
+// 	return idxDiagonalSpace
+// }
 
 func (state *State) BestNeighbor() (*State, int, int) {
 	minVal := 1000000
@@ -386,4 +387,17 @@ func (state *State) RandomNeighbor() (*State, int, int) {
 
 	newState.Value = currVal
 	return &newState, first, second
+}
+
+func (state *State) PrintState() {
+	for i := 0; i < 5; i++ {
+		fmt.Printf("Layer %d\n", i+1)
+		for j := 0; j < 5; j++ {
+			for k := 0; k < 5; k++ {
+				fmt.Printf("%d ", state.Cubes[i*25+j*5+k])
+			}
+			fmt.Println()
+		}
+		fmt.Println()
+	}
 }
