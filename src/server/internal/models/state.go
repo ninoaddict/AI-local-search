@@ -117,7 +117,7 @@ func (state *State) Init() {
 		idx++
 	}
 
-	// first space diagonal
+	// space diagonal
 	sum1 := 0
 	sum2 := 0
 	sum3 := 0
@@ -184,7 +184,7 @@ func getAffectedArea(idx int) []int {
 	}
 	res = append(res, idxDiagonal2)
 
-	// check diagonal=3
+	// check diagonal-3
 	idxDiagonal3 := -1
 	if i == j {
 		idxDiagonal3 = 95 + k*2
@@ -331,10 +331,10 @@ func (state *State) BestNeighbor() (*State, int, int) {
 		area2 := affectedArea2[k]
 		if area1 != area2 {
 			if area1 != -1 {
-				state.CurrSum[area1] = state.CurrSum[area1] + state.Cubes[second] - state.Cubes[first]
+				newState.CurrSum[area1] = newState.CurrSum[area1] + newState.Cubes[second] - newState.Cubes[first]
 			}
 			if area2 != -1 {
-				state.CurrSum[area2] = state.CurrSum[area2] + state.Cubes[first] - state.Cubes[second]
+				newState.CurrSum[area2] = newState.CurrSum[area2] + newState.Cubes[first] - newState.Cubes[second]
 			}
 		}
 	}
@@ -371,12 +371,12 @@ func (state *State) RandomNeighbor() (*State, int, int) {
 			if area1 != -1 {
 				currVal -= (315 - state.CurrSum[area1]) * (315 - state.CurrSum[area1])
 				currVal += (315 - (state.CurrSum[area1] + state.Cubes[second] - state.Cubes[first])) * (315 - (state.CurrSum[area1] + state.Cubes[second] - state.Cubes[first]))
-				state.CurrSum[area1] = state.CurrSum[area1] + state.Cubes[second] - state.Cubes[first]
+				newState.CurrSum[area1] = newState.CurrSum[area1] + newState.Cubes[second] - newState.Cubes[first]
 			}
 			if area2 != -1 {
 				currVal -= (315 - state.CurrSum[area2]) * (315 - state.CurrSum[area2])
 				currVal += (315 - (state.CurrSum[area2] + state.Cubes[first] - state.Cubes[second])) * (315 - (state.CurrSum[area2] + state.Cubes[first] - state.Cubes[second]))
-				state.CurrSum[area2] = state.CurrSum[area2] + state.Cubes[first] - state.Cubes[second]
+				newState.CurrSum[area2] = newState.CurrSum[area2] + newState.Cubes[first] - newState.Cubes[second]
 			}
 		}
 	}
