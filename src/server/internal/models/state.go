@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"math/rand"
 	"time"
 )
@@ -386,4 +387,17 @@ func (state *State) RandomNeighbor() (*State, int, int) {
 
 	newState.Value = currVal
 	return &newState, first, second
+}
+
+func (state *State) PrintState() {
+	for i := 0; i < 5; i++ {
+		fmt.Printf("Layer %d\n", i+1)
+		for j := 0; j < 5; j++ {
+			for k := 0; k < 5; k++ {
+				fmt.Printf("%d ", state.Cubes[i*25+j*5+k])
+			}
+			fmt.Println()
+		}
+		fmt.Println()
+	}
 }
