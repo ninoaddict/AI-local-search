@@ -168,27 +168,27 @@ func getAffectedArea(idx int) []int {
 	// check diagonal-1
 	idxDiagonal1 := -1
 	if j == k {
-		idxDiagonal1 = 75 + i*5
+		idxDiagonal1 = 75 + i*2
 	} else if k == 4-j {
-		idxDiagonal1 = 75 + i*5 + 1
+		idxDiagonal1 = 75 + i*2 + 1
 	}
 	res = append(res, idxDiagonal1)
 
 	// check diagonal-2
 	idxDiagonal2 := -1
 	if i == k {
-		idxDiagonal2 = 85 + j*5
+		idxDiagonal2 = 85 + j*2
 	} else if k == 4-i {
-		idxDiagonal2 = 85 + j*5 + 1
+		idxDiagonal2 = 85 + j*2 + 1
 	}
 	res = append(res, idxDiagonal2)
 
 	// check diagonal=3
 	idxDiagonal3 := -1
 	if i == j {
-		idxDiagonal3 = 95 + k*5
+		idxDiagonal3 = 95 + k*2
 	} else if i == 4-j {
-		idxDiagonal3 = 95 + k*5 + 1
+		idxDiagonal3 = 95 + k*2 + 1
 	}
 	res = append(res, idxDiagonal3)
 
@@ -234,9 +234,9 @@ func getAffectedDiagonal1(idx int) int {
 	k := idx % 5
 	idxDiagonal1 := -1
 	if j == k {
-		idxDiagonal1 = 75 + i*5
+		idxDiagonal1 = 75 + i*2
 	} else if k == 4-j {
-		idxDiagonal1 = 75 + i*5 + 1
+		idxDiagonal1 = 75 + i*2 + 1
 	}
 	return idxDiagonal1
 }
@@ -247,9 +247,9 @@ func getAffectedDiagonal2(idx int) int {
 	k := idx % 5
 	idxDiagonal2 := -1
 	if i == k {
-		idxDiagonal2 = 85 + j*5
+		idxDiagonal2 = 85 + j*2
 	} else if k == 4-i {
-		idxDiagonal2 = 85 + j*5 + 1
+		idxDiagonal2 = 85 + j*2 + 1
 	}
 	return idxDiagonal2
 }
@@ -260,9 +260,9 @@ func getAffectedDiagonal3(idx int) int {
 	k := idx % 5
 	idxDiagonal3 := -1
 	if i == j {
-		idxDiagonal3 = 95 + k*5
+		idxDiagonal3 = 95 + k*2
 	} else if i == 4-j {
-		idxDiagonal3 = 95 + k*5 + 1
+		idxDiagonal3 = 95 + k*2 + 1
 	}
 	return idxDiagonal3
 }
