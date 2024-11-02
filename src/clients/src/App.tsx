@@ -1,36 +1,46 @@
-import React from "react";
-import logo from "./logo.svg";
-// import "./App.css";
-import { Button } from "./components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "./components/ui/dropdown-menu";
+import { func } from "ts-interface-checker";
+import VideoPlayer from "./components/video-player";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          HELOO!
-        </a>
-      </header>
-      <h1 className="text-5xl">asdlkjfasdf</h1>
-      <Button variant={"default"}>asdfasdljfaskjdlhflkjshdlkjahsdfkjh</Button>
-    </div>
-  );
+function generateRandomMatrix(): number[] {
+  return Array.from({ length: 125 }, () => Math.floor(Math.random() * 125) + 1);
 }
+
+function generateSequentialArray(size: number) {
+  return Array.from({ length: size }, (_, index) => index + 1);
+}
+
+const generateSequentialIndexPairs = (size: number): [number, number][] => {
+  const pairs: [number, number][] = [];
+
+  for (let i = 0; i < size; i++) {
+    pairs.push([i, i + 1]);
+  }
+
+  return pairs;
+};
+
+const generateRandomIndexPairs = (
+  size: number,
+  pairCount: number
+): [number, number][] => {
+  const pairs = new Set<string>();
+  while (pairs.size < pairCount) {
+    const index1 = Math.floor(Math.random() * size);
+    const index2 = Math.floor(Math.random() * size);
+    if (index1 !== index2) {
+      pairs.add(
+        JSON.stringify([Math.min(index1, index2), Math.max(index1, index2)])
+      );
+    }
+  }
+  return Array.from(pairs).map((pair) => JSON.parse(pair) as [number, number]);
+};
+
+const App = () => {
+  const initialArray = generateSequentialArray(125);
+  const indexPairs = generateRandomIndexPairs(125, 7500);
+
+  return <VideoPlayer initialArray={initialArray} indexPairs={indexPairs} />;
+};
 
 export default App;
