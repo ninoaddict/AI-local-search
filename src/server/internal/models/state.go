@@ -24,6 +24,14 @@ func (state *State) Init() {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	r.Shuffle(len(state.Cubes), func(i, j int) { state.Cubes[i], state.Cubes[j] = state.Cubes[j], state.Cubes[i] })
 
+	// state.Cubes = []int{
+	// 	25, 16, 80, 104, 90, 115, 98, 4, 1, 97, 42, 111, 85, 2, 75, 66, 72, 27, 102, 48, 67, 18, 119, 106, 5,
+	// 	91, 77, 71, 6, 70, 52, 64, 117, 69, 13, 30, 118, 21, 123, 23, 26, 39, 92, 44, 114, 116, 17, 14, 73, 95,
+	// 	47, 61, 45, 76, 86, 107, 43, 38, 33, 94, 89, 68, 63, 58, 37, 32, 93, 88, 83, 19, 40, 50, 81, 65, 79,
+	// 	31, 53, 112, 109, 10, 12, 82, 34, 87, 100, 103, 3, 105, 8, 96, 113, 57, 9, 62, 74, 56, 120, 55, 49, 35,
+	// 	121, 108, 7, 20, 59, 29, 28, 122, 125, 11, 51, 15, 41, 124, 84, 78, 54, 99, 24, 60, 36, 110, 46, 22, 101,
+	// }
+
 	state.CurrSum = []int{}
 	for i := 0; i < 109; i++ {
 		state.CurrSum = append(state.CurrSum, 0)
@@ -208,87 +216,12 @@ func getAffectedArea(idx int) []int {
 	return res
 }
 
-// func getAffectedRow(idx int) int {
-// 	i := idx / 25
-// 	j := (idx % 25) / 5
-// 	idxRow := 5*i + j
-// 	return idxRow
-// }
-
-// func getAffectedCol(idx int) int {
-// 	i := idx / 25
-// 	k := idx % 5
-// 	idxCol := 25 + 5*i + k
-// 	return idxCol
-// }
-
-// func getAffectedTiang(idx int) int {
-// 	j := (idx % 25) / 5
-// 	k := idx % 5
-// 	idxTiang := 50 + 5*j + k
-// 	return idxTiang
-// }
-
-// func getAffectedDiagonal1(idx int) int {
-// 	i := idx / 25
-// 	j := (idx % 25) / 5
-// 	k := idx % 5
-// 	idxDiagonal1 := -1
-// 	if j == k {
-// 		idxDiagonal1 = 75 + i*5
-// 	} else if k == 4-j {
-// 		idxDiagonal1 = 75 + i*5 + 1
-// 	}
-// 	return idxDiagonal1
-// }
-
-// func getAffectedDiagonal2(idx int) int {
-// 	i := idx / 25
-// 	j := (idx % 25) / 5
-// 	k := idx % 5
-// 	idxDiagonal2 := -1
-// 	if i == k {
-// 		idxDiagonal2 = 85 + j*5
-// 	} else if k == 4-i {
-// 		idxDiagonal2 = 85 + j*5 + 1
-// 	}
-// 	return idxDiagonal2
-// }
-
-// func getAffectedDiagonal3(idx int) int {
-// 	i := idx / 25
-// 	j := (idx % 25) / 5
-// 	k := idx % 5
-// 	idxDiagonal3 := -1
-// 	if i == j {
-// 		idxDiagonal3 = 95 + k*5
-// 	} else if i == 4-j {
-// 		idxDiagonal3 = 95 + k*5 + 1
-// 	}
-// 	return idxDiagonal3
-// }
-
-// func (state *State) getAffectedDiagonalSpace(idx int) int {
-// 	i := idx / 25
-// 	j := (idx % 25) / 5
-// 	k := idx % 5
-// 	idxDiagonalSpace := -1
-// 	if i == j && j == k {
-// 		idxDiagonalSpace = 105
-// 	} else if j == 4-i && i == k {
-// 		idxDiagonalSpace = 106
-// 	} else if j == k && i == 4-j {
-// 		idxDiagonalSpace = 107
-// 	} else if i == j && j == 4-k {
-// 		idxDiagonalSpace = 108
-// 	}
-// 	return idxDiagonalSpace
-// }
-
 func (state *State) BestNeighbor() (*State, int, int) {
 	minVal := 1000000
 	first := -1
 	second := -1
+	arrayFirst := []int{}
+	arraySecond := []int{}
 	for i := 0; i < 125; i++ {
 		for j := i + 1; j < 125; j++ {
 			currVal := int(state.Value)
@@ -312,11 +245,22 @@ func (state *State) BestNeighbor() (*State, int, int) {
 
 			if currVal < minVal {
 				minVal = currVal
-				first = i
-				second = j
+				arrayFirst = []int{}
+				arraySecond = []int{}
+				arrayFirst = append(arrayFirst, i)
+				arraySecond = append(arraySecond, j)
+			} else if currVal == minVal {
+				arrayFirst = append(arrayFirst, i)
+				arraySecond = append(arraySecond, j)
 			}
 		}
 	}
+
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	rndFirst := r.Intn(len(arrayFirst))
+	first = arrayFirst[rndFirst]
+	second = arraySecond[rndFirst]
+
 	newState := State{Value: minVal}
 	newState.Cubes = make([]int, len(state.Cubes))
 	copy(newState.Cubes, state.Cubes)
