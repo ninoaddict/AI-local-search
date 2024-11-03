@@ -97,8 +97,10 @@ export default function VideoPlayer({
   return (
     <div>
       <p>CURRENT MATRIX: {currentMatrixIndex}</p>
-      <p>VALUE: {indexPairs[currentMatrixIndex].Value} </p>
-      <CubeState matrixData={currentMatrixData} />
+      <CubeState
+        matrixData={currentMatrixData}
+        value={indexPairs[currentMatrixIndex].Value}
+      />
 
       <Button onClick={prev}> PREV </Button>
       <Button onClick={next}> NEXT </Button>

@@ -2,6 +2,7 @@ import VideoPlayer from "./components/video-player";
 import AlgorithmSelection from "./components/algorithm-selection";
 import { useState } from "react";
 import CubeState from "./components/cube-state";
+import { ApiResponse } from "./types/response-types";
 
 function generateRandomMatrix(): number[] {
   return Array.from({ length: 125 }, () => Math.floor(Math.random() * 125) + 1);
@@ -39,9 +40,9 @@ const generateRandomIndexPairs = (
 };
 
 const App = () => {
-  const [responseData, setResponseData] = useState<any | null>(null); // Update with specific type if available
+  const [responseData, setResponseData] = useState<ApiResponse | null>(null); // Update with specific type if available
 
-  const handleResponseData = (data: any) => {
+  const handleResponseData = (data: ApiResponse) => {
     console.log(data);
     setResponseData(data);
   };
@@ -56,22 +57,71 @@ const App = () => {
           {"initialPopulation" in responseData && (
             <>
               <h3>Genetic Algorithm Response</h3>
-              <pre>{JSON.stringify(responseData, null, 2)}</pre>
+              <div>BEST STATE </div>
+              <CubeState
+                matrixData={responseData.bestState.Cubes}
+                value={responseData.bestState.Value}
+              />
+
+              <div>Initial Population</div>
+              {responseData.initialPopulation.map((state, index) => (
+                <CubeState
+                  key={index}
+                  matrixData={state.Cubes}
+                  value={state.Value}
+                />
+              ))}
+
+              <div>Final Population</div>
+              {responseData.finalPopulation.map((state, index) => (
+                <CubeState
+                  key={index}
+                  matrixData={state.Cubes}
+                  value={state.Value}
+                />
+              ))}
             </>
           )}
           {"numRestart" in responseData && (
             <>
               <h3>Random Restart Hill-Climbing Response</h3>
-              <pre>{JSON.stringify(responseData, null, 2)}</pre>
-            </>
-          )}
-          {"initial" in responseData && (
-            <>
               <div>INITIAL </div>
-              <CubeState matrixData={responseData.initial.Cubes} />
+              <CubeState
+                matrixData={responseData.initial.Cubes}
+                value={responseData.initial.Value}
+              />
 
               <div>FINAL</div>
-              <CubeState matrixData={responseData.final.Cubes} />
+              <CubeState
+                matrixData={responseData.final.Cubes}
+                value={responseData.initial.Value}
+              />
+
+              <div>VIDEO </div>
+              {responseData.iterations.map((iteration, index) => (
+                <VideoPlayer
+                  key={index}
+                  initialArray={responseData.initial.Cubes}
+                  indexPairs={iteration.Iter}
+                />
+              ))}
+
+              <div>DURATION {responseData.time} </div>
+            </>
+          )}
+          {"stuckIter" in responseData && (
+            <>
+              <div>INITIAL </div>
+              <CubeState
+                matrixData={responseData.initial.Cubes}
+                value={responseData.initial.Value}
+              />
+
+              <div>FINAL</div>
+              <CubeState
+                matrixData={responseData.final.Cubes}
+                value={responseData.initial.Value}
+              />
 
               <div>VIDEO </div>
               <VideoPlayer
