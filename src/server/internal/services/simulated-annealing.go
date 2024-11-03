@@ -18,7 +18,7 @@ func SimulatedAnnealing() (*models.State, *models.State, []models.Iteration, int
 		iter++
 		T := schedule(t)
 
-		if T <= 0.1 {
+		if T <= 0.1 || current.Value == 0 {
 			return initial, current, iterations, iter, stuck
 		}
 
@@ -47,15 +47,14 @@ func SimulatedAnnealing() (*models.State, *models.State, []models.Iteration, int
 				})
 			}
 		}
-
 	}
 }
 
 func schedule(t int) float64 {
-	initialTemperature := 100000.0
-	coolingRate := 0.0001
+    initialTemperature := 1000000.0
+    coolingRate := 0.9995
 
-	T := initialTemperature * math.Exp(-coolingRate*float64(t))
+    T := initialTemperature * math.Pow(coolingRate, float64(t))
 
-	return T
+    return T
 }

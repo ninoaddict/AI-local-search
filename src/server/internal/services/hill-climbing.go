@@ -78,3 +78,52 @@ func HillClimbingSideways(maxMove int) (*models.State, *models.State, []models.I
 		}
 	}
 }
+
+func RandomRestartHillClimbing(maxRestart int) (*models.State, *models.State, []models.RestartIteration, int) {
+	restartIteration := []models.RestartIteration{}
+	counter := 0
+
+	for counter < maxRestart {
+		counter++
+		init, final, iteration, iter := HillClimbing()
+		restartIteration = append(restartIteration, models.RestartIteration{
+			Initial: init,
+			Final:   final,
+			Iter:    iteration,
+			NumIter: iter,
+		})
+		if final.Value == 0 {
+			break
+		}
+	}
+
+	return restartIteration[0].Initial, restartIteration[len(restartIteration)-1].Final, restartIteration, counter
+}
+
+func StochasticHillClimbing() (*models.State, *models.State, []models.Iteration, int) {
+	initial := &models.State{}
+	initial.Init()
+
+	current := initial
+	iterations := []models.Iteration{}
+	counter := 0
+
+	for counter < 800000 {
+		counter++
+		neighbor, first, second := current.RandomNeighbor()
+
+		if neighbor.Value < current.Value {
+			current = neighbor
+			iterations = append(iterations, models.Iteration{
+				First:  first,
+				Second: second,
+				Value:  current.Value,
+				Exp:    1,
+			})
+		}
+		if current.Value == 0 {
+			return initial, current, iterations, counter
+		}
+	}
+	return initial, current, iterations, counter
+}
