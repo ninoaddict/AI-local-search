@@ -1,13 +1,7 @@
 "use client";
-import { Button } from "./ui/button";
+import Button from "./ui/button";
 import { Slider } from "./ui/slider";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "./ui/select";
+import Select from "./ui/select";
 import CubeState from "./cube-state";
 import { useState, useEffect } from "react";
 
@@ -111,18 +105,10 @@ export default function VideoPlayer({
         className="w-full mt-4"
       />
 
-      <Select onValueChange={handleSelectChange} value={String(playSpeed)}>
-        <SelectTrigger>
-          <SelectValue placeholder="Select Speed" />
-        </SelectTrigger>
-        <SelectContent>
-          {[0.1, 0.5, 1, 1.5, 2, 5].map((speed) => (
-            <SelectItem key={speed} value={String(speed)}>
-              {speed}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <Select
+        items={[0.1, 0.5, 1, 1.5, 2, 5].map(String)}
+        onValueChange={handleSelectChange}
+      />
 
       <Button
         onClick={togglePause}

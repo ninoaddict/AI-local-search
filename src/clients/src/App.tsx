@@ -1,5 +1,5 @@
-import { func } from "ts-interface-checker";
-import VideoPlayer from "./components/video-player";
+
+// import VideoPlayer from "./components/video-player";
 import AlgorithmSelection from "./components/algorithm-selection";
 import { useState } from "react";
 
@@ -52,6 +52,7 @@ const App = () => {
   return (
     <div>
       <AlgorithmSelection onSearch={handleResponseData} />
+      {/* <VideoPlayer initialArray={initialArray} indexPairs={indexPairs}/> */}
     </div>
   );
 };

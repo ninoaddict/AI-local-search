@@ -1,19 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "./ui/select";
-import { Button } from "./ui/button";
+import Select from "./ui/select";
+import Button from "./ui/button";
+import Input from "./ui/input";
 
 const algorithms = [
-  {
-    value: "Hill-Climbing",
-  },
+  { value: "Hill-Climbing" },
   {
     value: "Hill-Climbing with Sideways Move",
     inputs: [{ placeholder: "Max Iteration: " }],
@@ -22,12 +15,8 @@ const algorithms = [
     value: "Random Restart Hill-Climbing",
     inputs: [{ placeholder: "Max Restart: " }],
   },
-  {
-    value: "Stochastic Hill-climbing",
-  },
-  {
-    value: "Simulated Annealing",
-  },
+  { value: "Stochastic Hill-climbing" },
+  { value: "Simulated Annealing" },
   {
     value: "Genetic Algorithm",
     inputs: [
@@ -58,16 +47,11 @@ export default function AlgorithmSelection({
     setInputValues(selectedAlg?.inputs ? selectedAlg.inputs.map(() => "") : []);
   };
 
-  const handleInputChange = (index: number, newValue: string) => {
-    setInputValues((prevValues) => {
-      const updatedValues = [...prevValues];
-      updatedValues[index] = newValue;
-      return updatedValues;
-    });
-  };
-
   // TODO: Pass to the right endpoint
   const handleSearch = async () => {
+    console.log("Algorithm: ", selectedAlgorithm);
+    console.log("Values: ", inputValues);
+
     try {
       const response = await fetch("/api/dummySearch", {
         method: "POST",
@@ -97,19 +81,10 @@ export default function AlgorithmSelection({
     <div className="max-w-md p-4 mx-auto bg-white rounded-lg shadow-md">
       <h2 className="mb-4 text-xl font-bold">Local Search</h2>
 
-      <Select value={selectedAlgorithm} onValueChange={handleAlgorithmChange}>
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder="Select Algorithm" />
-        </SelectTrigger>
-
-        <SelectContent>
-          {algorithms.map((alg, index) => (
-            <SelectItem key={index} value={alg.value}>
-              {alg.value}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <Select
+        items={algorithms.map((alg) => alg.value)}
+        onValueChange={handleAlgorithmChange}
+      />
 
       <div className="mt-4 space-y-2">
         {currentAlgorithm?.inputs && currentAlgorithm.inputs.length > 0 ? (
@@ -118,11 +93,18 @@ export default function AlgorithmSelection({
               <label className="mr-2 font-medium">
                 {inputConfig.placeholder.replace(":", "")}:
               </label>
-              <input
-                type="text"
-                value={inputValues[index]}
-                onChange={(e) => handleInputChange(index, e.target.value)}
+              <Input
+                key={index}
+                value={inputValues[index]} // Use the corresponding input value
+                setValue={(newValue: string) => {
+                  setInputValues((prevValues) => {
+                    const updatedValues = [...prevValues];
+                    updatedValues[index] = newValue;
+                    return updatedValues;
+                  });
+                }}
                 className="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
+                placeholder={inputConfig.placeholder}
               />
             </div>
           ))

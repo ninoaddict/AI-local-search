@@ -1,10 +1,13 @@
-import { Button } from "./ui/button";
+import Button from "./ui/button";
 
 interface CubeStateProps {
   matrixData: number[];
 }
 
 export default function CubeState({ matrixData }: CubeStateProps) {
+  const handleCLick = () => {
+    console.log("clicked");
+  };
   return (
     <div className="flex flex-wrap gap-4">
       {Array.from({ length: 5 }, (_, index) => (
@@ -16,12 +19,13 @@ export default function CubeState({ matrixData }: CubeStateProps) {
             matrixData
               .slice(index * 25, (index + 1) * 25)
               .map((num, innerIndex) => (
-                <Button
+                <button
+                  onClick={handleCLick}
                   key={innerIndex}
                   className="text-black bg-yellow-200 border-black border-2 w-[35px] h-[35px]"
                 >
                   {num}
-                </Button>
+                </button>
               ))}
         </div>
       ))}
