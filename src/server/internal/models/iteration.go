@@ -15,8 +15,8 @@ type GeneticIteration struct {
 }
 
 type RestartIteration struct {
-	Initial *State
-	Final   *State
+	Initial State
+	Final   State
 	Iter    []Iteration
 	NumIter int
 }
