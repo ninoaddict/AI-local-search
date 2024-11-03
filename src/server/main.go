@@ -10,7 +10,7 @@ import (
 
 func main() {
 	// api.Init()
-	initial, final, _, iter := services.StochasticHillClimbing()
+	initial, final, _, iter := services.RandomRestartHillClimbing(20)
 	fmt.Printf("Value: %d\n", initial.Value)
 	initial.PrintState()
 	fmt.Println("============================")

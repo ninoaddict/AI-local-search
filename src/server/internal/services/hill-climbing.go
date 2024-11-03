@@ -83,6 +83,10 @@ func RandomRestartHillClimbing(maxRestart int) (*models.State, *models.State, []
 	restartIteration := []models.RestartIteration{}
 	counter := 0
 
+	best := &models.State{}
+	best.Init()
+	best.Value = 10000000
+
 	for counter < maxRestart {
 		counter++
 		init, final, iteration, iter := HillClimbing()
@@ -92,12 +96,15 @@ func RandomRestartHillClimbing(maxRestart int) (*models.State, *models.State, []
 			Iter:    iteration,
 			NumIter: iter,
 		})
-		if final.Value == 0 {
+		if final.Value < best.Value {
+			best = final
+		}
+		if best.Value == 0 {
 			break
 		}
 	}
 
-	return restartIteration[0].Initial, restartIteration[len(restartIteration)-1].Final, restartIteration, counter
+	return restartIteration[0].Initial, best, restartIteration, counter
 }
 
 func StochasticHillClimbing() (*models.State, *models.State, []models.Iteration, int) {
