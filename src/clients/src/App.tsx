@@ -1,5 +1,7 @@
 import { func } from "ts-interface-checker";
 import VideoPlayer from "./components/video-player";
+import AlgorithmSelection from "./components/algorithm-selection";
+import { useState } from "react";
 
 function generateRandomMatrix(): number[] {
   return Array.from({ length: 125 }, () => Math.floor(Math.random() * 125) + 1);
@@ -40,9 +42,16 @@ const App = () => {
   const initialArray = generateSequentialArray(125);
   const indexPairs = generateRandomIndexPairs(125, 7500);
 
+  //TODO: use the right type
+  const [responseData, setResponseData] = useState<string | null>(null);
+
+  const handleResponseData = (data: string) => {
+    setResponseData(data);
+  };
+
   return (
     <div>
-      <VideoPlayer initialArray={initialArray} indexPairs={indexPairs} />;
+      <AlgorithmSelection onSearch={handleResponseData} />
     </div>
   );
 };
