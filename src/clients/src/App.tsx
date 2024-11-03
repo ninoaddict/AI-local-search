@@ -40,7 +40,7 @@ const generateRandomIndexPairs = (
 };
 
 const App = () => {
-  const [responseData, setResponseData] = useState<ApiResponse | null>(null); // Update with specific type if available
+  const [responseData, setResponseData] = useState<ApiResponse | null>(null);
 
   const handleResponseData = (data: ApiResponse) => {
     console.log(data);
@@ -57,6 +57,13 @@ const App = () => {
           {"initialPopulation" in responseData && (
             <>
               <h3>Genetic Algorithm Response</h3>
+              <div>Best Objective Function: {responseData.bestState.Value}</div>
+              <div>Number of Iteration: {responseData.numIter}</div>
+              <div>Time: {responseData.time}</div>
+              <div>
+                Number of Population: {responseData.finalPopulation.length}
+              </div>
+
               <div>BEST STATE </div>
               <CubeState
                 matrixData={responseData.bestState.Cubes}
@@ -85,6 +92,9 @@ const App = () => {
           {"numRestart" in responseData && (
             <>
               <h3>Random Restart Hill-Climbing Response</h3>
+              <div>Restart Time {responseData.numRestart} </div>
+              <div>DURATION {responseData.time} </div>
+
               <div>INITIAL </div>
               <CubeState
                 matrixData={responseData.initial.Cubes}
@@ -99,18 +109,25 @@ const App = () => {
 
               <div>VIDEO </div>
               {responseData.iterations.map((iteration, index) => (
-                <VideoPlayer
-                  key={index}
-                  initialArray={responseData.initial.Cubes}
-                  indexPairs={iteration.Iter}
-                />
+                <div>
+                  <p>
+                    Iteration for restart {index} : {iteration.NumIter}
+                  </p>
+                  <VideoPlayer
+                    key={index}
+                    initialArray={responseData.initial.Cubes}
+                    indexPairs={iteration.Iter}
+                  />
+                </div>
               ))}
-
-              <div>DURATION {responseData.time} </div>
             </>
           )}
           {"stuckIter" in responseData && (
             <>
+              <div>stuckIter: {responseData.stuckIter}</div>
+              <div>numIter: {responseData.numIter}</div>
+              <div>DURATION {responseData.time} </div>
+
               <div>INITIAL </div>
               <CubeState
                 matrixData={responseData.initial.Cubes}
@@ -128,8 +145,6 @@ const App = () => {
                 initialArray={responseData.initial.Cubes}
                 indexPairs={responseData.iterations}
               />
-
-              <div>DURATION {responseData.time} </div>
             </>
           )}
         </div>

@@ -69,7 +69,7 @@ export default function VideoPlayer({
   const next = () => {
     setCurrentMatrixIndex((prevIndex) => {
       console.log(prevIndex);
-      if (prevIndex < indexPairs.length) {
+      if (prevIndex < indexPairs.length - 1) {
         return prevIndex + 1;
       }
       return prevIndex;
