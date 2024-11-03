@@ -1,13 +1,20 @@
 "use client";
-import Button from "./ui/button";
+import { Button } from "./ui/button";
 import { Slider } from "./ui/slider";
-import Select from "./ui/select";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from "./ui/select";
 import CubeState from "./cube-state";
+import { Iteration } from "../types/response-types";
 import { useState, useEffect } from "react";
 
 interface VideoPlayerProps {
   initialArray: number[];
-  indexPairs: [number, number][];
+  indexPairs: Iteration[];
 }
 
 export default function VideoPlayer({
@@ -26,7 +33,7 @@ export default function VideoPlayer({
 
     if (currentMatrixIndex > PrevMatrixIndex) {
       for (let i = PrevMatrixIndex; i < currentMatrixIndex; i++) {
-        let [index1, index2] = indexPairs[i];
+        let { First: index1, Second: index2 } = indexPairs[i];
         [arrayCopy[index1], arrayCopy[index2]] = [
           arrayCopy[index2],
           arrayCopy[index1],
@@ -34,7 +41,7 @@ export default function VideoPlayer({
       }
     } else if (currentMatrixIndex < PrevMatrixIndex) {
       for (let i = PrevMatrixIndex - 1; i >= currentMatrixIndex; i--) {
-        let [index1, index2] = indexPairs[i];
+        let { First: index1, Second: index2 } = indexPairs[i];
         [arrayCopy[index2], arrayCopy[index1]] = [
           arrayCopy[index1],
           arrayCopy[index2],
@@ -52,7 +59,7 @@ export default function VideoPlayer({
     const intervalID = setInterval(() => {
       setCurrentMatrixIndex((prevIndex) => {
         const nextIndex = prevIndex + 1;
-        return nextIndex < indexPairs.length ? nextIndex : prevIndex; // stay di index yg sama
+        return nextIndex < indexPairs.length ? nextIndex : prevIndex;
       });
     }, 500 / playSpeed);
 
@@ -62,7 +69,6 @@ export default function VideoPlayer({
   const next = () => {
     setCurrentMatrixIndex((prevIndex) => {
       console.log(prevIndex);
-      //   console.log(indexPairs.length);
       if (prevIndex < indexPairs.length) {
         return prevIndex + 1;
       }
@@ -91,6 +97,7 @@ export default function VideoPlayer({
   return (
     <div>
       <p>CURRENT MATRIX: {currentMatrixIndex}</p>
+      <p>VALUE: {indexPairs[currentMatrixIndex].Value} </p>
       <CubeState matrixData={currentMatrixData} />
 
       <Button onClick={prev}> PREV </Button>
@@ -105,10 +112,18 @@ export default function VideoPlayer({
         className="w-full mt-4"
       />
 
-      <Select
-        items={[0.1, 0.5, 1, 1.5, 2, 5].map(String)}
-        onValueChange={handleSelectChange}
-      />
+      <Select onValueChange={handleSelectChange}>
+        <SelectTrigger>
+          <SelectValue placeholder="Select a value" />
+        </SelectTrigger>
+        <SelectContent>
+          {[0.1, 0.5, 1, 1.5, 2, 5].map((value) => (
+            <SelectItem key={value} value={String(value)}>
+              {value}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
 
       <Button
         onClick={togglePause}

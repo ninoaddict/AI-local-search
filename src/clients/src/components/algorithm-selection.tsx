@@ -1,33 +1,42 @@
 "use client";
 
 import { useState } from "react";
-import Select from "./ui/select";
-import Button from "./ui/button";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from "./ui/select";
+import { Button } from "./ui/button";
 import Input from "./ui/input";
 
 const algorithms = [
-  { value: "Hill-Climbing" },
+  { value: "Hill-Climbing", endpoint: "/steepest" },
   {
     value: "Hill-Climbing with Sideways Move",
-    inputs: [{ placeholder: "Max Iteration: " }],
+    endpoint: "/sideways",
+    inputs: [{ placeholder: "Max Iteration: ", paramName: "maxMove" }],
   },
   {
     value: "Random Restart Hill-Climbing",
-    inputs: [{ placeholder: "Max Restart: " }],
+    endpoint: "/random-restart",
+    inputs: [{ placeholder: "Max Restart: ", paramName: "maxRestart" }],
   },
-  { value: "Stochastic Hill-climbing" },
-  { value: "Simulated Annealing" },
+  { value: "Stochastic Hill-climbing", endpoint: "/stochastic" },
+  { value: "Simulated Annealing", endpoint: "/simulated" },
   {
     value: "Genetic Algorithm",
+    endpoint: "/genetic",
     inputs: [
-      { placeholder: "Population Size: " },
-      { placeholder: "Iteration Time: " },
+      { placeholder: "Population Size: ", paramName: "initPopulation" },
+      { placeholder: "Iteration Time: ", paramName: "maxIter" },
     ],
   },
 ];
 
 interface AlgorithmSelectionProps {
-  onSearch: (selectedAlgorithm: string, inputValues: string[]) => void;
+  onSearch: (data: any) => void; // TODO: Define more specific type if available
 }
 
 export default function AlgorithmSelection({
@@ -42,6 +51,7 @@ export default function AlgorithmSelection({
   );
 
   const handleAlgorithmChange = (value: string) => {
+    console.log("HANDLE CHANGE");
     const selectedAlg = algorithms.find((alg) => alg.value === value);
     setSelectedAlgorithm(value);
     setInputValues(selectedAlg?.inputs ? selectedAlg.inputs.map(() => "") : []);
@@ -49,27 +59,30 @@ export default function AlgorithmSelection({
 
   // TODO: Pass to the right endpoint
   const handleSearch = async () => {
-    console.log("Algorithm: ", selectedAlgorithm);
-    console.log("Values: ", inputValues);
+    const currentAlgorithm = algorithms.find(
+      (alg) => alg.value === selectedAlgorithm
+    );
+    if (!currentAlgorithm) return;
+
+    const url = new URL(`http://localhost:8080${currentAlgorithm.endpoint}`);
+    if (currentAlgorithm.inputs) {
+      currentAlgorithm.inputs.forEach((input, index) => {
+        if (inputValues[index]) {
+          url.searchParams.append(input.paramName, inputValues[index]);
+        }
+      });
+    }
 
     try {
-      const response = await fetch("/api/dummySearch", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          algorithm: selectedAlgorithm,
-          inputs: inputValues,
-        }),
-      });
-
-      if (!response.ok) throw new Error("Failed to fetch");
-
+      const response = await fetch(url.toString());
+      if (!response.ok) {
+        throw new Error(`API call failed with status ${response.status}`);
+      }
       const data = await response.json();
-      onSearch(selectedAlgorithm, inputValues); // Pass both values back to the parent
+      onSearch(data);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("API call error:", error);
+      onSearch(null);
     }
   };
 
@@ -81,10 +94,18 @@ export default function AlgorithmSelection({
     <div className="max-w-md p-4 mx-auto bg-white rounded-lg shadow-md">
       <h2 className="mb-4 text-xl font-bold">Local Search</h2>
 
-      <Select
-        items={algorithms.map((alg) => alg.value)}
-        onValueChange={handleAlgorithmChange}
-      />
+      <Select onValueChange={handleAlgorithmChange}>
+        <SelectTrigger>
+          <SelectValue placeholder="Select an algorithm" />
+        </SelectTrigger>
+        <SelectContent>
+          {algorithms.map((alg) => (
+            <SelectItem key={alg.value} value={alg.value}>
+              {alg.value}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
 
       <div className="mt-4 space-y-2">
         {currentAlgorithm?.inputs && currentAlgorithm.inputs.length > 0 ? (
@@ -95,7 +116,7 @@ export default function AlgorithmSelection({
               </label>
               <Input
                 key={index}
-                value={inputValues[index]} // Use the corresponding input value
+                value={inputValues[index]}
                 setValue={(newValue: string) => {
                   setInputValues((prevValues) => {
                     const updatedValues = [...prevValues];

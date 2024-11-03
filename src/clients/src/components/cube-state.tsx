@@ -1,5 +1,3 @@
-import Button from "./ui/button";
-
 interface CubeStateProps {
   matrixData: number[];
 }
@@ -8,6 +6,7 @@ export default function CubeState({ matrixData }: CubeStateProps) {
   const handleCLick = () => {
     console.log("clicked");
   };
+
   return (
     <div className="flex flex-wrap gap-4">
       {Array.from({ length: 5 }, (_, index) => (
