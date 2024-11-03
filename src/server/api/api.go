@@ -1,6 +1,8 @@
 package api
 
 import (
+	"src/server/internal/handlers"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -21,5 +23,8 @@ func corsMiddleware() gin.HandlerFunc {
 func Init() {
 	router := gin.Default()
 	router.Use(corsMiddleware())
+	// add handler methods
+	router.GET("/genetic", handlers.HandleGeneticAlgo)
+
 	router.Run("localhost:8080")
 }

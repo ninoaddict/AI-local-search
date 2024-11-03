@@ -3,7 +3,6 @@ package models
 import (
 	"fmt"
 	"math/rand"
-	"time"
 )
 
 // i nusuk
@@ -259,8 +258,7 @@ func (state *State) BestNeighbor() (*State, int, int) {
 		}
 	}
 
-	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	rndFirst := r.Intn(len(arrayFirst))
+	rndFirst := rand.Intn(len(arrayFirst))
 	first = arrayFirst[rndFirst]
 	second = arraySecond[rndFirst]
 
@@ -293,12 +291,11 @@ func (state *State) BestNeighbor() (*State, int, int) {
 }
 
 func (state *State) RandomNeighbor() (*State, int, int) {
-	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	first := r.Intn(125)
-	second := r.Intn(125)
+	first := rand.Intn(125)
+	second := rand.Intn(125)
 
 	for first == second {
-		second = r.Intn(125)
+		second = rand.Intn(125)
 	}
 
 	newState := State{}

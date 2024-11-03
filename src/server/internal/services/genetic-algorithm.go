@@ -1,10 +1,8 @@
 package services
 
 import (
-	"fmt"
 	"math/rand"
 	"src/server/internal/models"
-	"time"
 )
 
 func GeneticAlgorithm(maxIteration int, initPopulation int) ([]*models.State, []*models.State, []models.GeneticIteration, *models.State, int) {
@@ -30,9 +28,7 @@ func GeneticAlgorithm(maxIteration int, initPopulation int) ([]*models.State, []
 			x := randomSelection(population)
 			y := randomSelection(population)
 			child := reproduce(x, y)
-			fmt.Printf("%d %d\n", x.Value, y.Value)
-			r := rand.New(rand.NewSource(time.Now().UnixNano()))
-			if r.Float64() < 0.1 {
+			if rand.Float64() < 0.1 {
 				mutation(child)
 			}
 			valSum += child.Value
@@ -67,8 +63,7 @@ func randomSelection(population []*models.State) *models.State {
 		prefSum = append(prefSum, prev+fit)
 	}
 
-	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	selectedVal := r.Float64() * sum
+	selectedVal := rand.Float64() * sum
 
 	lo := 0
 	hi := len(prefSum)
@@ -118,24 +113,22 @@ func reproduce(p1 *models.State, p2 *models.State) *models.State {
 }
 
 func randomSegment() (int, int) {
-	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	start := r.Intn(125)
-	end := r.Intn(125)
+	start := rand.Intn(125)
+	end := rand.Intn(125)
 	for start == end {
-		end = r.Intn(125)
+		end = rand.Intn(125)
 	}
 	return start, end
 }
 
 func mutation(state *models.State) {
-	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	first := r.Intn(125)
-	second := r.Intn(125)
+	first := rand.Intn(125)
+	second := rand.Intn(125)
 	segLen := (second - first + 1 + 125) % 125
 
 	rot := 0
 	if segLen != 0 {
-		rot = r.Intn(segLen)
+		rot = rand.Intn(segLen)
 	}
 
 	temp := make([]int, segLen)
