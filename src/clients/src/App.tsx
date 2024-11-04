@@ -35,19 +35,19 @@ const App = () => {
                   bestObjective={responseData.bestState.Value}
                   totalPopulation={responseData.finalPopulation.length}
                   numIter={responseData.numIter}
-                  // duration={responseData.time}
+                  duration={responseData.time}
                 />
 
-                <div className="text-center font-bold text-xl my-6">
+                <div className="my-6 text-xl font-bold text-center">
                   BEST STATE
                 </div>
                 <CubeState
                   matrixData={responseData.bestState.Cubes}
                   value={responseData.bestState.Value}
                 />
-                <div className="text-center font-bold text-xl my-6">PLOT</div>
+                <div className="my-6 text-xl font-bold text-center">PLOT</div>
                 <GeneticPlot chartData={responseData.iterations} />
-                <div className="text-center font-bold text-xl my-6">
+                <div className="my-6 text-xl font-bold text-center">
                   Initial Population
                 </div>
                 {responseData.initialPopulation.map((state, index) => (
@@ -59,7 +59,7 @@ const App = () => {
                   />
                 ))}
 
-                <div className="text-center font-bold text-xl my-6">
+                <div className="my-6 text-xl font-bold text-center">
                   Final Population
                 </div>
                 {responseData.finalPopulation.map((state, index) => (
@@ -77,9 +77,10 @@ const App = () => {
                   title="Random Restart Hill Climbing"
                   restartTime={responseData.numRestart}
                   duration={responseData.time}
+                  bestObjective={responseData.final.Value}
                 />
 
-                <div className="text-center font-bold text-xl my-6">
+                <div className="my-6 text-xl font-bold text-center">
                   INITIAL
                 </div>
                 <CubeState
@@ -87,13 +88,13 @@ const App = () => {
                   value={responseData.initial.Value}
                 />
 
-                <div className="text-center font-bold text-xl my-6">FINAL</div>
+                <div className="my-6 text-xl font-bold text-center">FINAL</div>
                 <CubeState
                   matrixData={responseData.final.Cubes}
                   value={responseData.final.Value}
                 />
 
-                <div className="text-center font-bold text-xl my-6">PLOT</div>
+                <div className="my-6 text-xl font-bold text-center">PLOT</div>
                 {responseData.iterations.map((iteration, index) => (
                   <div>
                     <p>Iteration {index}</p>
@@ -101,7 +102,7 @@ const App = () => {
                   </div>
                 ))}
 
-                <div className="text-center font-bold text-xl my-6">VIDEO</div>
+                <div className="my-6 text-xl font-bold text-center">VIDEO</div>
                 {responseData.iterations.map((iteration, index) => (
                   <div>
                     <p>
@@ -109,8 +110,10 @@ const App = () => {
                     </p>
                     <VideoPlayer
                       key={index}
+                      initialVal={responseData.initial.Value}
                       initialArray={responseData.initial.Cubes}
                       indexPairs={iteration.Iter}
+                      totalIndex={iteration.Iter.length}
                     />
                   </div>
                 ))}
@@ -122,9 +125,10 @@ const App = () => {
                   title="Result"
                   numIter={responseData.numIter}
                   duration={responseData.time}
+                  bestObjective={responseData.final.Value}
                 />
 
-                <div className="text-center font-bold text-xl my-6">
+                <div className="my-6 text-xl font-bold text-center">
                   INITIAL
                 </div>
                 <CubeState
@@ -132,20 +136,21 @@ const App = () => {
                   value={responseData.initial.Value}
                 />
 
-                <div className="text-center font-bold text-xl my-6">FINAL</div>
+                <div className="my-6 text-xl font-bold text-center">FINAL</div>
                 <CubeState
                   matrixData={responseData.final.Cubes}
                   value={responseData.initial.Value}
                 />
 
-                <div className="text-center font-bold text-xl my-6">PLOT</div>
+                <div className="my-6 text-xl font-bold text-center">PLOT</div>
                 <ValuePlot chartData={responseData.iterations} />
 
-                <div className="text-center font-bold text-xl my-6">VIDEO</div>
+                <div className="my-6 text-xl font-bold text-center">VIDEO</div>
                 <VideoPlayer
+                  initialVal={responseData.initial.Value}
                   initialArray={responseData.initial.Cubes}
                   indexPairs={responseData.iterations}
-                  totalIndex={responseData.numIter}
+                  totalIndex={responseData.iterations.length}
                 />
               </>
             )}

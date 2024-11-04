@@ -1,7 +1,6 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import {
   Card,
@@ -38,7 +37,7 @@ export function ValuePlot({ chartData }: ValuePlotProps) {
   }));
 
   return (
-    <Card className="bg-white p-0 rounded-lg border-black border-2 shadow-black shadow-light dark:shadow-dark">
+    <Card className="p-0 bg-white border-2 border-black rounded-lg shadow-black shadow-light dark:shadow-dark">
       <CardContent className="p-0">
         <ChartContainer config={chartConfig} className="p-0">
           <AreaChart
@@ -50,6 +49,7 @@ export function ValuePlot({ chartData }: ValuePlotProps) {
             }}
           >
             <CartesianGrid vertical={false} />
+            <YAxis dataKey="Value" />
             <XAxis
               dataKey="index"
               tickLine={false}

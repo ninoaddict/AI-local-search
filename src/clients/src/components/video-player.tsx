@@ -17,12 +17,14 @@ import nextLogo from "../public/next.png";
 import previousLogo from "../public/previous.png";
 interface VideoPlayerProps {
   initialArray: number[];
+  initialVal: number;
   indexPairs: Iteration[];
-  totalIndex?: number;
+  totalIndex: number;
 }
 
 export default function VideoPlayer({
   initialArray,
+  initialVal,
   indexPairs,
   totalIndex,
 }: VideoPlayerProps) {
@@ -56,6 +58,7 @@ export default function VideoPlayer({
 
     setPrevMatrixIndex(currentMatrixIndex);
     setCurrentMatrixData(arrayCopy);
+    console.log(indexPairs.length); // TODO
   }, [initialArray, indexPairs, currentMatrixIndex]);
 
   useEffect(() => {
@@ -101,15 +104,23 @@ export default function VideoPlayer({
 
   return (
     <div>
-      <p>CURRENT MATRIX: {currentMatrixIndex}</p>
       <CubeState
         matrixData={currentMatrixData}
-        value={indexPairs[currentMatrixIndex].Value}
-        dataChange={[
-          indexPairs[currentMatrixIndex].First,
-          indexPairs[currentMatrixIndex].Second,
-        ]}
+        value={
+          currentMatrixIndex == 0
+            ? initialVal
+            : indexPairs[currentMatrixIndex - 1].Value
+        }
+        dataChange={
+          currentMatrixIndex > 0
+            ? [
+                indexPairs[currentMatrixIndex - 1].First,
+                indexPairs[currentMatrixIndex - 1].Second,
+              ]
+            : undefined
+        }
       />
+
       <div>
         <div className="flex flex-row translate-x-2 translate-y-4 font-poppinsRegular">
           <p>{currentMatrixIndex}</p>
@@ -120,13 +131,13 @@ export default function VideoPlayer({
           value={[currentMatrixIndex]}
           onValueChange={(value) => setCurrentMatrixIndex(value[0])}
           min={0}
-          max={indexPairs.length - 1}
+          max={indexPairs.length}
           step={1}
           className="w-full mt-4"
         />
       </div>
       <div className="flex flex-row mt-2">
-        <div className="flex w-full justify-center items-center gap-5">
+        <div className="flex items-center justify-center w-full gap-5">
           <Button
             onClick={prev}
             className="text-white p-2 bg-[#88AAEE] border-black border-2 rounded-full"
@@ -154,11 +165,11 @@ export default function VideoPlayer({
           </Button>
         </div>
         <Select onValueChange={handleSelectChange}>
-          <SelectTrigger className="rounded-lg border-black max-w-[50px]">
+          <SelectTrigger className="rounded-lg border-black max-w-[70px] text-center justify-evenly">
             <SelectValue placeholder="1" />
           </SelectTrigger>
           <SelectContent className="border-black rounded-lg">
-            {[0.1, 0.5, 1, 1.5, 2, 5].map((value) => (
+            {[0.5, 1, 1.5, 2, 5, 10, 100].map((value) => (
               <SelectItem key={value} value={String(value)}>
                 {value}
               </SelectItem>
@@ -166,7 +177,6 @@ export default function VideoPlayer({
           </SelectContent>
         </Select>
       </div>
-      <p>Objective Value: {indexPairs[currentMatrixIndex].Value} </p>
     </div>
   );
 }

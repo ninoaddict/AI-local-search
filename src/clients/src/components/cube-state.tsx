@@ -7,9 +7,9 @@ interface CubeStateProps {
 
 export default function CubeState({
   matrixData,
-  value,
   dataChange,
   className,
+  value,
 }: CubeStateProps) {
   const handleCLick = () => {
     console.log("clicked");
@@ -17,12 +17,12 @@ export default function CubeState({
 
   return (
     <div
-      className={` bg-white py-4 px-4 rounded-lg border-black border-2 shadow-black shadow-light dark:shadow-dark ${
+      className={` bg-white py-4 px-4 rounded-lg border-black border-2 shadow-black shadow-light dark:shadow-dark text-center ${
         className ?? ""
       }`}
     >
-      {/* <p>Value: {value}</p> */}
-      <div className="flex flex-wrap gap-4 items-center justify-center">
+      <p className="mb-2 text-md font-poppinsMedium">Objective Value: {value} </p>
+      <div className="flex flex-wrap items-center justify-center gap-4">
         {Array.from({ length: 5 }, (_, index) => (
           <div
             key={index}
@@ -36,7 +36,7 @@ export default function CubeState({
                     onClick={handleCLick}
                     key={innerIndex}
                     className={`text-black ${
-                      dataChange?.includes((index + 1) * 25)
+                      dataChange?.includes(index * 25 + innerIndex)
                         ? "bg-red-200"
                         : "bg-yellow-200"
                     } border-black border-2 w-[35px] h-[35px] translate-x-[-3px] translate-y-[-3px]`}

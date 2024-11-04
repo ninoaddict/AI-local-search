@@ -16,7 +16,9 @@ const algorithms = [
   {
     value: "Hill-Climbing with Sideways Move",
     endpoint: "/sideways",
-    inputs: [{ placeholder: "Max Iteration: ", paramName: "maxMove" }],
+    inputs: [
+      { placeholder: "Max Consecutive Sideways: ", paramName: "maxMove" },
+    ],
   },
   {
     value: "Random Restart Hill-Climbing",
@@ -42,9 +44,7 @@ interface AlgorithmSelectionProps {
 export default function AlgorithmSelection({
   onSearch,
 }: AlgorithmSelectionProps) {
-  const [selectedAlgorithm, setSelectedAlgorithm] = useState<string>(
-    algorithms[0].value
-  );
+  const [selectedAlgorithm, setSelectedAlgorithm] = useState<string>("");
 
   const [inputValues, setInputValues] = useState<string[]>(
     algorithms[0].inputs ? algorithms[0].inputs.map(() => "") : []
@@ -92,10 +92,10 @@ export default function AlgorithmSelection({
 
   return (
     <div className="bg-white max-w-md min-w-[310px] p-4 border-black border-2 shadow-black rounded-[5px] shadow-light dark:shadow-dark">
-      <h2 className="mb-4 text-xl text-center font-bold">Local Search</h2>
+      <h2 className="mb-4 text-xl font-bold text-center">Local Search</h2>
 
       <Select onValueChange={handleAlgorithmChange}>
-        <SelectTrigger className="rounded-lg border-black">
+        <SelectTrigger className="border-black rounded-lg">
           <SelectValue placeholder="Select an algorithm" />
         </SelectTrigger>
         <SelectContent className="border-black rounded-lg">

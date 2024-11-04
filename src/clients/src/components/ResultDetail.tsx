@@ -4,7 +4,7 @@ interface ResultProps {
   title?: string;
   stuckIter?: number;
   numIter?: number;
-  duration?: number;
+  duration: number;
   restartTime?: number;
   bestObjective?: number;
   totalPopulation?: number;
@@ -20,11 +20,11 @@ export default function ResultDetail({
   totalPopulation,
 }: ResultProps) {
   return (
-    <div className="w-full flex justify-center items-center">
+    <div className="flex items-center justify-center w-full">
       <Card className="w-[310px] bg-white p-0 rounded-lg border-black border-2 shadow-black shadow-light dark:shadow-dark">
         <CardContent className="w-[310px] flex flex-col px-4 py-4 font-poppinsRegular">
           {title && (
-            <h1 className="text-center text-xl font-poppinsSemiBold">
+            <h1 className="text-xl text-center font-poppinsSemiBold">
               {title}
             </h1>
           )}
@@ -63,13 +63,13 @@ export default function ResultDetail({
               <h1>{restartTime}</h1>
             </p>
           )}
-          {duration && (
-            <p className="grid grid-cols-[1fr_10px_1fr]">
-              <h1>Duration Search</h1>
-              <h1>: </h1>
-              <h1>{duration}</h1>
-            </p>
-          )}
+
+          <p className="grid grid-cols-[1fr_10px_1fr]">
+            <h1>Duration Search</h1>
+            <h1>: </h1>
+
+            <h1>{duration} ms</h1>
+          </p>
         </CardContent>
       </Card>
     </div>

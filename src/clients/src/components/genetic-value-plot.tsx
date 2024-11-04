@@ -8,6 +8,7 @@ import {
   LineChart,
   CartesianGrid,
   XAxis,
+  YAxis,
 } from "recharts";
 
 import {
@@ -50,16 +51,10 @@ export function GeneticPlot({ chartData }: GeneticPlotProps) {
   }));
 
   return (
-    <Card>
+    <Card className="p-0 bg-white border-2 border-black rounded-lg shadow-black shadow-light dark:shadow-dark">
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <LineChart
-            data={chartDataWithIndex}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
-          >
+          <LineChart data={chartDataWithIndex}>
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="index"
@@ -71,6 +66,7 @@ export function GeneticPlot({ chartData }: GeneticPlotProps) {
               cursor={false}
               content={<ChartTooltipContent indicator="dot" hideLabel />}
             />
+            <YAxis dataKey="AvgValue" />
             <Line
               dataKey="AvgValue"
               type="linear"
