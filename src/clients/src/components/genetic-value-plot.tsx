@@ -1,24 +1,8 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
-import {
-  Area,
-  AreaChart,
-  Line,
-  LineChart,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { Line, LineChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -36,7 +20,11 @@ const chartConfig = {
   },
   min: {
     label: "MinValue",
-    color: "hsl(var(--chart-3))",
+    color: "hsl(var(--chart-2))",
+  },
+  index: {
+    label: "Iteration",
+    color: "hsl(var(--chart-4))",
   },
 } satisfies ChartConfig;
 
@@ -81,6 +69,15 @@ export function GeneticPlot({ chartData }: GeneticPlotProps) {
               stroke="var(--color-min)"
               strokeWidth={2}
               dot={false}
+            />
+
+            <Line
+              dataKey="index"
+              type="linear"
+              stroke="var(--color-index)"
+              strokeWidth={2}
+              dot={false}
+              strokeOpacity={0}
             />
           </LineChart>
         </ChartContainer>

@@ -104,7 +104,8 @@ const App = () => {
                   <div>
                     <ValuePlot
                       chartData={iteration.Iter}
-                      description={"Iteration: " + (index + 1)}
+                      initialValue={responseData.initial.Value}
+                      description={"Restart: " + index}
                     />
                   </div>
                 ))}
@@ -113,7 +114,7 @@ const App = () => {
                 {responseData.iterations.map((iteration, index) => (
                   <div>
                     <p>
-                      Iteration for restart {index + 1} : {iteration.NumIter}
+                      Iteration for restart {index} : {iteration.NumIter}
                     </p>
                     <VideoPlayer
                       key={index}
@@ -150,7 +151,10 @@ const App = () => {
                 />
 
                 <div className="mt-6 text-xl font-bold text-center">PLOT</div>
-                <ValuePlot chartData={responseData.iterations} />
+                <ValuePlot
+                  chartData={responseData.iterations}
+                  initialValue={responseData.initial.Value}
+                />
 
                 <div className="mt-6 text-xl font-bold text-center">VIDEO</div>
                 <VideoPlayer
