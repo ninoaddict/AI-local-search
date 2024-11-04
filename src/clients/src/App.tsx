@@ -162,7 +162,7 @@ const App = () => {
                   initialValue={responseData.initial.Value}
                 />
 
-                {responseData.numIter > 0 && (
+                {responseData.stuckIter > 0 && (
                   <div className="mt-6">
                     <ExpPlot chartData={responseData.iterations} />
                   </div>
