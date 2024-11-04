@@ -119,8 +119,8 @@ const App = () => {
                     </p>
                     <VideoPlayer
                       key={index}
-                      initialVal={responseData.initial.Value}
-                      initialArray={responseData.initial.Cubes}
+                      initialVal={iteration.Initial.Value}
+                      initialArray={iteration.Initial.Cubes}
                       indexPairs={iteration.Iter}
                       totalIndex={iteration.Iter.length}
                     />
