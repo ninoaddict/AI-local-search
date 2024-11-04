@@ -11,15 +11,20 @@ import {
 import CubeState from "./cube-state";
 import { Iteration } from "../types/response-types";
 import { useState, useEffect } from "react";
-
+import pauseLogo from "../public/pause.png";
+import playLogo from "../public/play.png";
+import nextLogo from "../public/next.png";
+import previousLogo from "../public/previous.png";
 interface VideoPlayerProps {
   initialArray: number[];
   indexPairs: Iteration[];
+  totalIndex?: number;
 }
 
 export default function VideoPlayer({
   initialArray,
   indexPairs,
+  totalIndex,
 }: VideoPlayerProps) {
   const [currentMatrixIndex, setCurrentMatrixIndex] = useState(0);
   const [PrevMatrixIndex, setPrevMatrixIndex] = useState(0);
@@ -100,39 +105,68 @@ export default function VideoPlayer({
       <CubeState
         matrixData={currentMatrixData}
         value={indexPairs[currentMatrixIndex].Value}
+        dataChange={[
+          indexPairs[currentMatrixIndex].First,
+          indexPairs[currentMatrixIndex].Second,
+        ]}
       />
-
-      <Button onClick={prev}> PREV </Button>
-      <Button onClick={next}> NEXT </Button>
-
-      <Slider
-        value={[currentMatrixIndex]}
-        onValueChange={(value) => setCurrentMatrixIndex(value[0])}
-        min={0}
-        max={indexPairs.length - 1}
-        step={1}
-        className="w-full mt-4"
-      />
-
-      <Select onValueChange={handleSelectChange}>
-        <SelectTrigger>
-          <SelectValue placeholder="Select a value" />
-        </SelectTrigger>
-        <SelectContent>
-          {[0.1, 0.5, 1, 1.5, 2, 5].map((value) => (
-            <SelectItem key={value} value={String(value)}>
-              {value}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-
-      <Button
-        onClick={togglePause}
-        className="px-4 py-2 mt-4 text-white bg-blue-500 rounded"
-      >
-        {isPaused ? "Resume" : "Pause"}
-      </Button>
+      <div>
+        <div className="flex flex-row translate-x-2 translate-y-4 font-poppinsRegular">
+          <p>{currentMatrixIndex}</p>
+          <p>/</p>
+          <p>{totalIndex}</p>
+        </div>
+        <Slider
+          value={[currentMatrixIndex]}
+          onValueChange={(value) => setCurrentMatrixIndex(value[0])}
+          min={0}
+          max={indexPairs.length - 1}
+          step={1}
+          className="w-full mt-4"
+        />
+      </div>
+      <div className="flex flex-row mt-2">
+        <div className="flex w-full justify-center items-center gap-5">
+          <Button
+            onClick={prev}
+            className="text-white p-2 bg-[#88AAEE] border-black border-2 rounded-full"
+            variant={"noShadow"}
+          >
+            <img src={previousLogo} alt="Previous" width={20} height={20} />
+          </Button>
+          <Button
+            onClick={togglePause}
+            className="text-white p-2 bg-[#88AAEE] border-black border-2 rounded-full"
+            variant={"noShadow"}
+          >
+            {!isPaused ? (
+              <img src={pauseLogo} alt="Pause" width={20} height={20} />
+            ) : (
+              <img src={playLogo} alt="Pause" width={20} height={20} />
+            )}
+          </Button>
+          <Button
+            onClick={next}
+            className="text-white p-2 bg-[#88AAEE] border-black border-2 rounded-full"
+            variant={"noShadow"}
+          >
+            <img src={nextLogo} alt="Next" width={20} height={20} />
+          </Button>
+        </div>
+        <Select onValueChange={handleSelectChange}>
+          <SelectTrigger className="rounded-lg border-black max-w-[50px]">
+            <SelectValue placeholder="1" />
+          </SelectTrigger>
+          <SelectContent className="border-black rounded-lg">
+            {[0.1, 0.5, 1, 1.5, 2, 5].map((value) => (
+              <SelectItem key={value} value={String(value)}>
+                {value}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+      <p>Objective Value: {indexPairs[currentMatrixIndex].Value} </p>
     </div>
   );
 }

@@ -1,17 +1,28 @@
 interface CubeStateProps {
   matrixData: number[];
   value: number;
+  dataChange?: number[];
+  className?: string;
 }
 
-export default function CubeState({ matrixData, value }: CubeStateProps) {
+export default function CubeState({
+  matrixData,
+  value,
+  dataChange,
+  className,
+}: CubeStateProps) {
   const handleCLick = () => {
     console.log("clicked");
   };
 
   return (
-    <div>
-      <p>Value: {value}</p>
-      <div className="flex flex-wrap gap-4">
+    <div
+      className={` bg-white py-4 px-4 rounded-lg border-black border-2 shadow-black shadow-light dark:shadow-dark ${
+        className ?? ""
+      }`}
+    >
+      {/* <p>Value: {value}</p> */}
+      <div className="flex flex-wrap gap-4 items-center justify-center">
         {Array.from({ length: 5 }, (_, index) => (
           <div
             key={index}
@@ -24,7 +35,11 @@ export default function CubeState({ matrixData, value }: CubeStateProps) {
                   <button
                     onClick={handleCLick}
                     key={innerIndex}
-                    className="text-black bg-yellow-200 border-black border-2 w-[35px] h-[35px]"
+                    className={`text-black ${
+                      dataChange?.includes((index + 1) * 25)
+                        ? "bg-red-200"
+                        : "bg-yellow-200"
+                    } border-black border-2 w-[35px] h-[35px] translate-x-[-3px] translate-y-[-3px]`}
                   >
                     {num}
                   </button>

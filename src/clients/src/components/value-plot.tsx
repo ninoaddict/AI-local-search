@@ -28,7 +28,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 type ValuePlotProps = {
-  chartData: Iteration[]; 
+  chartData: Iteration[];
 };
 
 export function ValuePlot({ chartData }: ValuePlotProps) {
@@ -38,10 +38,11 @@ export function ValuePlot({ chartData }: ValuePlotProps) {
   }));
 
   return (
-    <Card>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
+    <Card className="bg-white p-0 rounded-lg border-black border-2 shadow-black shadow-light dark:shadow-dark">
+      <CardContent className="p-0">
+        <ChartContainer config={chartConfig} className="p-0">
           <AreaChart
+            className="py-1"
             data={chartDataWithIndex}
             margin={{
               left: 12,

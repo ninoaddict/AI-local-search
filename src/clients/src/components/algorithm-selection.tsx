@@ -91,16 +91,20 @@ export default function AlgorithmSelection({
   );
 
   return (
-    <div className="max-w-md p-4 mx-auto bg-white rounded-lg shadow-md">
-      <h2 className="mb-4 text-xl font-bold">Local Search</h2>
+    <div className="bg-white max-w-md min-w-[310px] p-4 border-black border-2 shadow-black rounded-[5px] shadow-light dark:shadow-dark">
+      <h2 className="mb-4 text-xl text-center font-bold">Local Search</h2>
 
       <Select onValueChange={handleAlgorithmChange}>
-        <SelectTrigger>
+        <SelectTrigger className="rounded-lg border-black">
           <SelectValue placeholder="Select an algorithm" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="border-black rounded-lg">
           {algorithms.map((alg) => (
-            <SelectItem key={alg.value} value={alg.value}>
+            <SelectItem
+              key={alg.value}
+              value={alg.value}
+              className="hover:border ring-offset-black"
+            >
               {alg.value}
             </SelectItem>
           ))}
@@ -131,12 +135,17 @@ export default function AlgorithmSelection({
           ))
         ) : (
           <p className="text-gray-500">
-            No additional inputs required for this algorithm.
+            {/* No additional inputs required for this algorithm. */}
           </p>
         )}
       </div>
 
-      <Button onClick={handleSearch}>Search</Button>
+      <Button
+        className="mt-2 w-full bg-main border-none rounded-[5px] shadow-light dark:shadow-dark hover:border-solid hover:border-black hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none dark:hover:shadow-none"
+        onClick={handleSearch}
+      >
+        Search
+      </Button>
     </div>
   );
 }

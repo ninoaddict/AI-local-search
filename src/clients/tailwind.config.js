@@ -13,9 +13,6 @@ module.exports = {
       },
     },
     extend: {
-      borderRadius: {
-        base: "5px",
-      },
       boxShadow: {
         light: "4px 4px 0px 0px #000",
         dark: "4px 4px 0px 0px #000",
@@ -32,12 +29,11 @@ module.exports = {
       },
       colors: {
         main: "#88aaee",
-        overlay: "rgba(0,0,0,0.8)", 
+        overlay: "rgba(0,0,0,0.8)",
 
         bg: "#dfe5f2",
         text: "#000",
         border: "#000",
-
 
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -77,9 +73,15 @@ module.exports = {
         lg: `var(--radius)`,
         md: `calc(var(--radius) - 2px)`,
         sm: "calc(var(--radius) - 4px)",
+        base: "5px",
       },
       fontFamily: {
+        bold: ["Poppins-SemiBold", "sans-serif"],
         sans: ["var(--font-sans)", ...fontFamily.sans],
+        poppinsRegular: ["Poppins-Regular", "sans-serif"],
+        poppinsSemiBold: ["Poppins-SemiBold", "sans-serif"],
+        poppinsBold: ["Poppins-Bold", "sans-serif"],
+        poppinsMedium: ["Poppins-Medium", "sans-serif"],
       },
       keyframes: {
         "accordion-down": {
