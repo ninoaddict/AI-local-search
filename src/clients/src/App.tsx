@@ -136,7 +136,7 @@ const App = () => {
                   duration={responseData.time}
                   bestObjective={responseData.final.Value}
                   stuckIter={
-                    responseData.numIter > 0
+                    responseData.stuckIter > 0
                       ? responseData.stuckIter
                       : undefined
                   }
