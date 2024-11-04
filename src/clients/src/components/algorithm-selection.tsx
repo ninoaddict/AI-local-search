@@ -10,6 +10,7 @@ import {
 } from "./ui/select";
 import { Button } from "./ui/button";
 import Input from "./ui/input";
+import Loading from "./loading";
 
 const algorithms = [
   { value: "Hill-Climbing", endpoint: "/steepest" },
@@ -39,10 +40,14 @@ const algorithms = [
 
 interface AlgorithmSelectionProps {
   onSearch: (data: any) => void; // TODO: Define more specific type if available
+  onSearching: (data: boolean) => void;
+  isSearching: boolean;
 }
 
 export default function AlgorithmSelection({
   onSearch,
+  onSearching,
+  isSearching,
 }: AlgorithmSelectionProps) {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState<string>("");
 
@@ -51,7 +56,6 @@ export default function AlgorithmSelection({
   );
 
   const handleAlgorithmChange = (value: string) => {
-    console.log("HANDLE CHANGE");
     const selectedAlg = algorithms.find((alg) => alg.value === value);
     setSelectedAlgorithm(value);
     setInputValues(selectedAlg?.inputs ? selectedAlg.inputs.map(() => "") : []);
@@ -63,6 +67,7 @@ export default function AlgorithmSelection({
       (alg) => alg.value === selectedAlgorithm
     );
     if (!currentAlgorithm) return;
+    onSearching(true);
 
     const url = new URL(`http://localhost:8080${currentAlgorithm.endpoint}`);
     if (currentAlgorithm.inputs) {
@@ -84,6 +89,7 @@ export default function AlgorithmSelection({
       console.error("API call error:", error);
       onSearch(null);
     }
+    onSearching(false);
   };
 
   const currentAlgorithm = algorithms.find(
@@ -141,10 +147,11 @@ export default function AlgorithmSelection({
       </div>
 
       <Button
-        className="mt-2 w-full bg-main border-none rounded-[5px] shadow-light dark:shadow-dark hover:border-solid hover:border-black hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none dark:hover:shadow-none"
+        className="mt-2 w-full text-lg font-poppinsSemiBold  border-black bg-main border-2 rounded-[5px] shadow-light dark:shadow-dark hover:border-solid hover:border-black hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none dark:hover:shadow-none"
         onClick={handleSearch}
+        disabled={isSearching}
       >
-        Search
+        {isSearching ? <Loading /> : "Search"}
       </Button>
     </div>
   );
