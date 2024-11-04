@@ -44,16 +44,16 @@ const App = () => {
                   duration={responseData.time}
                 />
 
-                <div className="my-6 text-xl font-bold text-center">
+                <div className="mt-6 text-xl font-bold text-center">
                   BEST STATE
                 </div>
                 <CubeState
                   matrixData={responseData.bestState.Cubes}
                   value={responseData.bestState.Value}
                 />
-                <div className="my-6 text-xl font-bold text-center">PLOT</div>
+                <div className="mt-6 text-xl font-bold text-center">PLOT</div>
                 <GeneticPlot chartData={responseData.iterations} />
-                <div className="my-6 text-xl font-bold text-center">
+                <div className="mt-6 text-xl font-bold text-center">
                   Initial Population
                 </div>
                 {responseData.initialPopulation.map((state, index) => (
@@ -61,11 +61,11 @@ const App = () => {
                     key={index}
                     matrixData={state.Cubes}
                     value={state.Value}
-                    className="my-6"
+                    className="mt-6"
                   />
                 ))}
 
-                <div className="my-6 text-xl font-bold text-center">
+                <div className="mt-6 text-xl font-bold text-center">
                   Final Population
                 </div>
                 {responseData.finalPopulation.map((state, index) => (
@@ -86,7 +86,7 @@ const App = () => {
                   bestObjective={responseData.final.Value}
                 />
 
-                <div className="my-6 text-xl font-bold text-center">
+                <div className="mt-6 text-xl font-bold text-center">
                   INITIAL
                 </div>
                 <CubeState
@@ -94,21 +94,23 @@ const App = () => {
                   value={responseData.initial.Value}
                 />
 
-                <div className="my-6 text-xl font-bold text-center">FINAL</div>
+                <div className="mt-6 text-xl font-bold text-center">FINAL</div>
                 <CubeState
                   matrixData={responseData.final.Cubes}
                   value={responseData.final.Value}
                 />
 
-                <div className="my-6 text-xl font-bold text-center">PLOT</div>
+                <div className="mt-6 text-xl font-bold text-center">PLOT</div>
                 {responseData.iterations.map((iteration, index) => (
                   <div>
-                    <p>Iteration {index}</p>
-                    <ValuePlot chartData={iteration.Iter} />
+                    <ValuePlot
+                      chartData={iteration.Iter}
+                      description={"Iteration: " + index + 1}
+                    />
                   </div>
                 ))}
 
-                <div className="my-6 text-xl font-bold text-center">VIDEO</div>
+                <div className="mt-6 text-xl font-bold text-center">VIDEO</div>
                 {responseData.iterations.map((iteration, index) => (
                   <div>
                     <p>
@@ -134,7 +136,7 @@ const App = () => {
                   bestObjective={responseData.final.Value}
                 />
 
-                <div className="my-6 text-xl font-bold text-center">
+                <div className="mt-6 text-xl font-bold text-center">
                   INITIAL
                 </div>
                 <CubeState
@@ -142,16 +144,18 @@ const App = () => {
                   value={responseData.initial.Value}
                 />
 
-                <div className="my-6 text-xl font-bold text-center">FINAL</div>
+                <div className="mt-6 text-xl font-bold text-center">FINAL</div>
                 <CubeState
                   matrixData={responseData.final.Cubes}
                   value={responseData.initial.Value}
                 />
 
-                <div className="my-6 text-xl font-bold text-center">PLOT</div>
-                <ValuePlot chartData={responseData.iterations} />
+                <div className="mt-6 text-xl font-bold text-center">PLOT</div>
+                <ValuePlot
+                  chartData={responseData.iterations}
+                />
 
-                <div className="my-6 text-xl font-bold text-center">VIDEO</div>
+                <div className="mt-6 text-xl font-bold text-center">VIDEO</div>
                 <VideoPlayer
                   initialVal={responseData.initial.Value}
                   initialArray={responseData.initial.Cubes}

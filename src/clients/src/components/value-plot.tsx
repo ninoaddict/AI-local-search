@@ -28,9 +28,10 @@ const chartConfig = {
 
 type ValuePlotProps = {
   chartData: Iteration[];
+  description?: string;
 };
 
-export function ValuePlot({ chartData }: ValuePlotProps) {
+export function ValuePlot({ chartData, description }: ValuePlotProps) {
   const chartDataWithIndex = chartData.map((item, index) => ({
     ...item,
     index,
@@ -38,6 +39,12 @@ export function ValuePlot({ chartData }: ValuePlotProps) {
 
   return (
     <Card className="p-0 bg-white border-2 border-black rounded-lg shadow-black shadow-light dark:shadow-dark">
+      <CardHeader className="text-center">
+        <CardTitle className="font-poppinsMedium">
+          Objective Value Graph
+        </CardTitle>
+        {description && <CardDescription>{description}</CardDescription>}
+      </CardHeader>
       <CardContent className="p-0">
         <ChartContainer config={chartConfig} className="p-0">
           <AreaChart

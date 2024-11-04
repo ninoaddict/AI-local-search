@@ -52,16 +52,17 @@ export function GeneticPlot({ chartData }: GeneticPlotProps) {
 
   return (
     <Card className="p-0 bg-white border-2 border-black rounded-lg shadow-black shadow-light dark:shadow-dark">
+      <CardHeader className="text-center">
+        <CardTitle className="font-poppinsMedium text-md">
+          Objective Value Graph
+        </CardTitle>
+      </CardHeader>
+
       <CardContent>
         <ChartContainer config={chartConfig}>
           <LineChart data={chartDataWithIndex}>
             <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="index"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-            />
+            <XAxis dataKey="index" tickLine={false} tickMargin={8} />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="dot" hideLabel />}

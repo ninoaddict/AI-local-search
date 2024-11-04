@@ -123,9 +123,9 @@ export default function VideoPlayer({
 
       <div>
         <div className="flex flex-row translate-x-2 translate-y-4 font-poppinsRegular">
-          <p>{currentMatrixIndex}</p>
+          <p>{currentMatrixIndex + 1}</p>
           <p>/</p>
-          <p>{totalIndex}</p>
+          <p>{totalIndex + 1}</p>
         </div>
         <Slider
           value={[currentMatrixIndex]}

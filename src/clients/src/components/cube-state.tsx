@@ -21,7 +21,7 @@ export default function CubeState({
         className ?? ""
       }`}
     >
-      <p className="mb-2 text-md font-poppinsMedium">Objective Value: {value} </p>
+      <p className="mb-2 font-poppinsMedium">Objective Value: {value} </p>
       <div className="flex flex-wrap items-center justify-center gap-4">
         {Array.from({ length: 5 }, (_, index) => (
           <div
