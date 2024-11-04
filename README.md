@@ -66,3 +66,11 @@ go run main.go
 ```
 
 The frontend need the server (backend) to run first to reach any services provided by the server.  
+
+#### Task Assigments
+| **NIM**           | **Task**                                                                                        |
+|-------------------|-------------------------------------------------------------------------------------------------|
+| `13522068`        | Server (State, Genetic Algorithm, API setup, Handler for Genetic Algorithm), Report             |
+| `13522093`        | Clients (UI) + Video Player, Report                                                             |
+| `13522098`        | Server (Hill Climbing, Simulated Annealing, Handler for Hill Climbing ada Simulated Annealing)  |
+| `13522118`        | Clients (UI) + Video Player, Report                                                             |
