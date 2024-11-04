@@ -2,7 +2,10 @@ import VideoPlayer from "./components/video-player";
 import AlgorithmSelection from "./components/algorithm-selection";
 import { useState } from "react";
 import CubeState from "./components/cube-state";
-import { ApiResponse } from "./types/response-types";
+import { ApiResponse, Iteration } from "./types/response-types";
+import { ValuePlot } from "./components/value-plot";
+import { GeneticIteration } from "./types/response-types";
+import { GeneticPlot } from "./components/genetic-value-plot";
 
 function generateRandomMatrix(): number[] {
   return Array.from({ length: 125 }, () => Math.floor(Math.random() * 125) + 1);
@@ -39,6 +42,13 @@ const generateRandomIndexPairs = (
   return Array.from(pairs).map((pair) => JSON.parse(pair) as [number, number]);
 };
 
+const chartData: Iteration[] = [
+  { First: 1, Second: 2, Value: 10, Exp: 100 },
+  { First: 2, Second: 3, Value: 20, Exp: 200 },
+  { First: 3, Second: 4, Value: 30, Exp: 300 },
+  // Tambahkan data lainnya jika diperlukan
+];
+
 const App = () => {
   const [responseData, setResponseData] = useState<ApiResponse | null>(null);
 
@@ -69,6 +79,8 @@ const App = () => {
                 matrixData={responseData.bestState.Cubes}
                 value={responseData.bestState.Value}
               />
+
+              <GeneticPlot chartData={responseData.iterations} />
 
               <div>Initial Population</div>
               {responseData.initialPopulation.map((state, index) => (
@@ -104,8 +116,16 @@ const App = () => {
               <div>FINAL</div>
               <CubeState
                 matrixData={responseData.final.Cubes}
-                value={responseData.initial.Value}
+                value={responseData.final.Value}
               />
+
+              <div>PLOT</div>
+              {responseData.iterations.map((iteration, index) => (
+                <div>
+                  <p>Iteration {index}</p>
+                  <ValuePlot chartData={iteration.Iter} />
+                </div>
+              ))}
 
               <div>VIDEO </div>
               {responseData.iterations.map((iteration, index) => (
@@ -137,8 +157,11 @@ const App = () => {
               <div>FINAL</div>
               <CubeState
                 matrixData={responseData.final.Cubes}
-                value={responseData.initial.Value}
+                value={responseData.final.Value}
               />
+
+              <div>PLOT</div>
+              <ValuePlot chartData={responseData.iterations} />
 
               <div>VIDEO </div>
               <VideoPlayer
