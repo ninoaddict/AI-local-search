@@ -1,7 +1,8 @@
-# Use an official Node.js runtime as a base image
+# clients/Dockerfile
+# Step 1: Use a Node.js image to build the frontend
 FROM node:16 AS build
 
-# Set the working directory in the container
+# Set working directory
 WORKDIR /app
 
 # Copy package.json and package-lock.json
@@ -10,20 +11,20 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application files
+# Copy all frontend source files
 COPY . .
 
-# Build the app (for production builds)
+# Build the app for production
 RUN npm run build
 
-# Use a lightweight web server to serve static files
-FROM nginx:alpine AS production
+# Step 2: Serve the app with an Nginx server
+FROM nginx:alpine
 
-# Copy the build output to Nginx's default static directory
+# Copy the built files from the Node.js image to Nginx
 COPY --from=build /app/build /usr/share/nginx/html
 
-# Expose the port Nginx will run on
-EXPOSE 80
+# Expose the frontend port
+EXPOSE 3000
 
 # Start Nginx server
 CMD ["nginx", "-g", "daemon off;"]

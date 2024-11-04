@@ -2,6 +2,7 @@ package services
 
 import (
 	"math"
+	"math/rand"
 	"src/server/internal/models"
 )
 
@@ -18,7 +19,7 @@ func SimulatedAnnealing() (*models.State, *models.State, []models.Iteration, int
 		iter++
 		T := schedule(t)
 
-		if T <= 0.1 || current.Value == 0 {
+		if T <= 0.01 || current.Value == 0 {
 			return initial, current, iterations, iter, stuck
 		}
 
@@ -36,7 +37,7 @@ func SimulatedAnnealing() (*models.State, *models.State, []models.Iteration, int
 			})
 		} else {
 			probability := math.Exp(float64(deltaE) / T)
-			if 0.8 < probability {
+			if rand.Float64() <= probability {
 				current = neighbor
 				stuck++
 				iterations = append(iterations, models.Iteration{

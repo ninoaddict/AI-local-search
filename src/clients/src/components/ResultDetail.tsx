@@ -29,47 +29,47 @@ export default function ResultDetail({
             </h1>
           )}
           {stuckIter !== undefined && stuckIter > 0 && (
-            <p className="grid grid-cols-[1fr_10px_1fr]">
+            <div className="grid grid-cols-[1fr_10px_1fr]">
               <h1>Stuck Frequency</h1>
               <h1>:</h1>
               <h1>{stuckIter}</h1>
-            </p>
+            </div>
           )}
           {bestObjective && (
-            <p className="grid grid-cols-[1fr_10px_1fr]">
+            <div className="grid grid-cols-[1fr_10px_1fr]">
               <h1>Best Objective</h1>
               <h1>:</h1>
               <h1>{bestObjective}</h1>
-            </p>
+            </div>
           )}
           {totalPopulation && (
-            <p className="grid grid-cols-[1fr_10px_1fr]">
+            <div className="grid grid-cols-[1fr_10px_1fr]">
               <h1>Total Population</h1>
               <h1>:</h1>
               <h1>{totalPopulation}</h1>
-            </p>
+            </div>
           )}
           {numIter && (
-            <p className="grid grid-cols-[1fr_10px_1fr]">
+            <div className="grid grid-cols-[1fr_10px_1fr]">
               <h1>Total Iteration</h1>
               <h1>:</h1>
               <h1> {numIter}</h1>
-            </p>
+            </div>
           )}
           {restartTime && (
-            <p className="grid grid-cols-[1fr_10px_1fr]">
+            <div className="grid grid-cols-[1fr_10px_1fr]">
               <h1>Restart Iteration</h1>
               <h1>:</h1>
               <h1>{restartTime}</h1>
-            </p>
+            </div>
           )}
 
-          <p className="grid grid-cols-[1fr_10px_1fr]">
+          <div className="grid grid-cols-[1fr_10px_1fr]">
             <h1>Duration Search</h1>
             <h1>: </h1>
 
             <h1>{duration} ms</h1>
-          </p>
+          </div>
         </CardContent>
       </Card>
     </div>
