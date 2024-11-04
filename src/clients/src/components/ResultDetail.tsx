@@ -28,9 +28,9 @@ export default function ResultDetail({
               {title}
             </h1>
           )}
-          {stuckIter && (
+          {stuckIter !== undefined && stuckIter > 0 && (
             <p className="grid grid-cols-[1fr_10px_1fr]">
-              <h1>Stuck Iteration</h1>
+              <h1>Stuck Frequency</h1>
               <h1>:</h1>
               <h1>{stuckIter}</h1>
             </p>

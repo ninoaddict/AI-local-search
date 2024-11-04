@@ -1,6 +1,6 @@
 "use client";
 
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { Line, LineChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import {
   Card,
@@ -19,8 +19,8 @@ import { Iteration } from "../types/response-types";
 export const description = "A linear area chart";
 
 const chartConfig = {
-  value: {
-    label: "Value",
+  Exp: {
+    label: "Exp",
     color: "hsl(var(--chart-1))",
   },
   index: {
@@ -32,16 +32,11 @@ const chartConfig = {
 type ValuePlotProps = {
   chartData: Iteration[];
   description?: string;
-  initialValue: number;
 };
 
-export function ValuePlot({
-  initialValue,
-  chartData,
-  description,
-}: ValuePlotProps) {
+export function ExpPlot({ chartData }: ValuePlotProps) {
   const chartDataWithIndex = [
-    { Value: initialValue, index: 0 },
+    { Exp: 1, index: 0 },
     ...chartData.map((item, index) => ({
       ...item,
       index: index + 1,
@@ -51,16 +46,13 @@ export function ValuePlot({
   return (
     <Card className="p-0 bg-white border-2 border-black rounded-lg shadow-black shadow-light dark:shadow-dark">
       <CardHeader className="text-center">
-        <CardTitle className="font-poppinsMedium">
-          Objective Value Graph
-        </CardTitle>
-        {description && <CardDescription>{description}</CardDescription>}
+        <CardTitle className="font-poppinsMedium">Exp Value Graph</CardTitle>
       </CardHeader>
       <CardContent className="p-0">
         <ChartContainer config={chartConfig} className="p-0">
-          <AreaChart className="py-1" data={chartDataWithIndex}>
+          <LineChart className="py-1" data={chartDataWithIndex}>
             <CartesianGrid vertical={false} />
-            <YAxis dataKey="Value" />
+            <YAxis dataKey="Exp" />
             <XAxis
               dataKey="index"
               tickLine={false}
@@ -71,15 +63,15 @@ export function ValuePlot({
               cursor={false}
               content={<ChartTooltipContent indicator="dot" hideLabel />}
             />
-            <Area
-              dataKey="Value"
+            <Line
+              dataKey="Exp"
               type="linear"
-              fill="var(--color-value)"
+              fill="var(--color-exp)"
               fillOpacity={0.4}
-              stroke="var(--color-value)"
+              stroke="var(--color-exp)"
             />
 
-            <Area
+            <Line
               dataKey="index"
               stroke="var(--color-index)"
               type="linear"
@@ -87,7 +79,7 @@ export function ValuePlot({
               fillOpacity={0}
               strokeOpacity={0}
             />
-          </AreaChart>
+          </LineChart>
         </ChartContainer>
       </CardContent>
     </Card>

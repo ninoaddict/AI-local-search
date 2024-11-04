@@ -2,9 +2,9 @@ import VideoPlayer from "./components/video-player";
 import AlgorithmSelection from "./components/algorithm-selection";
 import { useState } from "react";
 import CubeState from "./components/cube-state";
-import { ApiResponse, Iteration } from "./types/response-types";
+import { ApiResponse } from "./types/response-types";
 import { ValuePlot } from "./components/value-plot";
-import { GeneticIteration } from "./types/response-types";
+import { ExpPlot } from "./components/exp-plot";
 import { GeneticPlot } from "./components/genetic-value-plot";
 import ResultDetail from "./components/ResultDetail";
 
@@ -12,6 +12,7 @@ const App = () => {
   const [responseData, setResponseData] = useState<ApiResponse | null>(null);
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const handleResponseData = (data: ApiResponse) => {
+    console.log(data);
     setResponseData(data);
   };
 
@@ -134,6 +135,11 @@ const App = () => {
                   numIter={responseData.numIter}
                   duration={responseData.time}
                   bestObjective={responseData.final.Value}
+                  stuckIter={
+                    responseData.numIter > 0
+                      ? responseData.stuckIter
+                      : undefined
+                  }
                 />
 
                 <div className="mt-6 text-xl font-bold text-center">
@@ -150,11 +156,17 @@ const App = () => {
                   value={responseData.final.Value}
                 />
 
-                <div className="mt-6 text-xl font-bold text-center">PLOT</div>
+                <div className="mt-6 text-xl font-bold text-center">PLOT </div>
                 <ValuePlot
                   chartData={responseData.iterations}
                   initialValue={responseData.initial.Value}
                 />
+
+                {responseData.numIter > 0 && (
+                  <div className="mt-6">
+                    <ExpPlot chartData={responseData.iterations} />
+                  </div>
+                )}
 
                 <div className="mt-6 text-xl font-bold text-center">VIDEO</div>
                 <VideoPlayer
