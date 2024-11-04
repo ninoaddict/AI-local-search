@@ -168,44 +168,66 @@ func getAffectedArea(idx int) []int {
 	res = append(res, idxTiang)
 
 	// check diagonal-1
-	idxDiagonal1 := -1
 	if j == k {
-		idxDiagonal1 = 75 + i*2
-	} else if k == 4-j {
-		idxDiagonal1 = 75 + i*2 + 1
+		res = append(res, 75+i*2)
+	} else {
+		res = append(res, -1)
 	}
-	res = append(res, idxDiagonal1)
+
+	if k == 4-j {
+		res = append(res, 75+i*2+1)
+	} else {
+		res = append(res, -1)
+	}
 
 	// check diagonal-2
-	idxDiagonal2 := -1
 	if i == k {
-		idxDiagonal2 = 85 + j*2
-	} else if k == 4-i {
-		idxDiagonal2 = 85 + j*2 + 1
+		res = append(res, 85+j*2)
+	} else {
+		res = append(res, -1)
 	}
-	res = append(res, idxDiagonal2)
+
+	if k == 4-i {
+		res = append(res, 85+j*2+1)
+	} else {
+		res = append(res, -1)
+	}
 
 	// check diagonal-3
-	idxDiagonal3 := -1
 	if i == j {
-		idxDiagonal3 = 95 + k*2
-	} else if i == 4-j {
-		idxDiagonal3 = 95 + k*2 + 1
+		res = append(res, 95+k*2)
+	} else {
+		res = append(res, -1)
 	}
-	res = append(res, idxDiagonal3)
 
-	idxDiagonalSpace := -1
+	if i == 4-j {
+		res = append(res, 95+k*2+1)
+	} else {
+		res = append(res, -1)
+	}
+
+	// check space diagonal
+
 	if i == j && j == k {
-		idxDiagonalSpace = 105
-	} else if j == 4-i && i == k {
-		idxDiagonalSpace = 106
-	} else if j == k && i == 4-j {
-		idxDiagonalSpace = 107
-	} else if i == j && j == 4-k {
-		idxDiagonalSpace = 108
+		res = append(res, 105)
+	} else {
+		res = append(res, -1)
 	}
-	res = append(res, idxDiagonalSpace)
-
+	if j == 4-i && i == k {
+		res = append(res, 106)
+	} else {
+		res = append(res, -1)
+	}
+	if j == k && i == 4-j {
+		res = append(res, 107)
+	} else {
+		res = append(res, -1)
+	}
+	if i == j && j == 4-k {
+		res = append(res, 108)
+	} else {
+		res = append(res, -1)
+	}
 	return res
 }
 
@@ -221,7 +243,7 @@ func (state *State) BestNeighbor() (*State, int, int) {
 			affectedArea1 := getAffectedArea(i)
 			affectedArea2 := getAffectedArea(j)
 
-			for k := 0; k < 7; k++ {
+			for k := 0; k < 13; k++ {
 				area1 := affectedArea1[k]
 				area2 := affectedArea2[k]
 				if area1 != area2 {
@@ -262,7 +284,7 @@ func (state *State) BestNeighbor() (*State, int, int) {
 	affectedArea1 := getAffectedArea(first)
 	affectedArea2 := getAffectedArea(second)
 
-	for k := 0; k < 7; k++ {
+	for k := 0; k < 13; k++ {
 		area1 := affectedArea1[k]
 		area2 := affectedArea2[k]
 		if area1 != area2 {
@@ -299,7 +321,7 @@ func (state *State) RandomNeighbor() (*State, int, int) {
 	affectedArea1 := getAffectedArea(first)
 	affectedArea2 := getAffectedArea(second)
 
-	for k := 0; k < 7; k++ {
+	for k := 0; k < 13; k++ {
 		area1 := affectedArea1[k]
 		area2 := affectedArea2[k]
 		if area1 != area2 {
