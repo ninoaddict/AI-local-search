@@ -147,7 +147,7 @@ const App = () => {
                 <div className="mt-6 text-xl font-bold text-center">FINAL</div>
                 <CubeState
                   matrixData={responseData.final.Cubes}
-                  value={responseData.initial.Value}
+                  value={responseData.final.Value}
                 />
 
                 <div className="mt-6 text-xl font-bold text-center">PLOT</div>
