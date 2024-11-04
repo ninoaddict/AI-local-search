@@ -1,4 +1,4 @@
-# backend/Dockerfile
+# server/Dockerfile
 # Use Golang image to build the backend
 FROM golang:1.22
 
@@ -16,7 +16,7 @@ COPY . .
 RUN go build -o backend-app
 
 # Expose the backend port
-EXPOSE 8090
+EXPOSE 8080  
 
 # Run the backend application
 CMD ["./backend-app"]
