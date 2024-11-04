@@ -49,9 +49,6 @@ export function ValuePlot({
     })),
   ];
 
-  {
-    console.log(chartData.length);
-  }
 
   return (
     <Card className="p-0 bg-white border-2 border-black rounded-lg shadow-black shadow-light dark:shadow-dark">

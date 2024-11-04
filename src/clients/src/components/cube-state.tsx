@@ -1,17 +1,18 @@
 interface CubeStateProps {
   matrixData: number[];
   value: number;
-  dataChange?: number[];
+  haveChanged?: number[];
+  willChange?: number[];
   className?: string;
 }
 
 export default function CubeState({
   matrixData,
-  dataChange,
+  haveChanged,
+  willChange,
   className,
   value,
 }: CubeStateProps) {
-
   return (
     <div
       className={` bg-white py-4 px-4 rounded-lg border-black border-2 shadow-black shadow-light dark:shadow-dark text-center ${
@@ -32,7 +33,9 @@ export default function CubeState({
                   <button
                     key={innerIndex}
                     className={`text-black ${
-                      dataChange?.includes(index * 25 + innerIndex)
+                      haveChanged?.includes(index * 25 + innerIndex)
+                        ? "bg-green-200"
+                        : willChange?.includes(index * 25 + innerIndex)
                         ? "bg-red-200"
                         : "bg-yellow-200"
                     } border-black border-2 w-[35px] h-[35px] translate-x-[-3px] translate-y-[-3px]`}

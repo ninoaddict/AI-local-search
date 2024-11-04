@@ -75,7 +75,7 @@ export default function VideoPlayer({
 
   const next = () => {
     setCurrentMatrixIndex((prevIndex) => {
-      if (prevIndex < indexPairs.length - 1) {
+      if (prevIndex < indexPairs.length) {
         return prevIndex + 1;
       }
       return prevIndex;
@@ -109,7 +109,15 @@ export default function VideoPlayer({
             ? initialVal
             : indexPairs[currentMatrixIndex - 1].Value
         }
-        dataChange={
+        willChange={
+          currentMatrixIndex < indexPairs.length
+            ? [
+                indexPairs[currentMatrixIndex].First,
+                indexPairs[currentMatrixIndex].Second,
+              ]
+            : undefined
+        }
+        haveChanged={
           currentMatrixIndex > 0
             ? [
                 indexPairs[currentMatrixIndex - 1].First,
