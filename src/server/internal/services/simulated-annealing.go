@@ -53,7 +53,7 @@ func SimulatedAnnealing() (*models.State, *models.State, []models.Iteration, int
 
 func schedule(t int) float64 {
 	initialTemperature := 9000000.0
-	coolingRate := 0.9995
+	coolingRate := 0.99995
 
 	T := initialTemperature * math.Pow(coolingRate, float64(t))
 
