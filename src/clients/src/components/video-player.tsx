@@ -58,7 +58,6 @@ export default function VideoPlayer({
 
     setPrevMatrixIndex(currentMatrixIndex);
     setCurrentMatrixData(arrayCopy);
-    console.log(indexPairs.length); // TODO
   }, [initialArray, indexPairs, currentMatrixIndex]);
 
   useEffect(() => {
@@ -67,7 +66,7 @@ export default function VideoPlayer({
     const intervalID = setInterval(() => {
       setCurrentMatrixIndex((prevIndex) => {
         const nextIndex = prevIndex + 1;
-        return nextIndex < indexPairs.length ? nextIndex : prevIndex;
+        return nextIndex < indexPairs.length + 1 ? nextIndex : prevIndex;
       });
     }, 500 / playSpeed);
 
@@ -76,7 +75,6 @@ export default function VideoPlayer({
 
   const next = () => {
     setCurrentMatrixIndex((prevIndex) => {
-      console.log(prevIndex);
       if (prevIndex < indexPairs.length - 1) {
         return prevIndex + 1;
       }

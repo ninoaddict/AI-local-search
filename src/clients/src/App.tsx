@@ -12,7 +12,6 @@ const App = () => {
   const [responseData, setResponseData] = useState<ApiResponse | null>(null);
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const handleResponseData = (data: ApiResponse) => {
-    console.log(data);
     setResponseData(data);
   };
 

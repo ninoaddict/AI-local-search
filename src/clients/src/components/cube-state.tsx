@@ -11,9 +11,6 @@ export default function CubeState({
   className,
   value,
 }: CubeStateProps) {
-  const handleCLick = () => {
-    console.log("clicked");
-  };
 
   return (
     <div
@@ -33,7 +30,6 @@ export default function CubeState({
                 .slice(index * 25, (index + 1) * 25)
                 .map((num, innerIndex) => (
                   <button
-                    onClick={handleCLick}
                     key={innerIndex}
                     className={`text-black ${
                       dataChange?.includes(index * 25 + innerIndex)
