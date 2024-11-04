@@ -10,7 +10,7 @@ import ResultDetail from "./components/ResultDetail";
 
 const App = () => {
   const [responseData, setResponseData] = useState<ApiResponse | null>(null);
-
+  const [isSearching, setIsSearching] = useState<boolean>(false);
   const handleResponseData = (data: ApiResponse) => {
     console.log(data);
     setResponseData(data);
@@ -19,15 +19,21 @@ const App = () => {
   return (
     <div
       className={`${
-        responseData ? "py-4" : "h-screen"
+        responseData && !isSearching ? "py-4" : "h-screen"
       } flex justify-center items-center  bg-[linear-gradient(to_right,#80808033_1px,transparent_1px),linear-gradient(to_bottom,#80808033_1px,transparent_1px)] bg-[size:70px_70px]`}
     >
       <div className={`flex flex-col w-full items-center justify-center`}>
-        <AlgorithmSelection onSearch={handleResponseData} />
-
+        <AlgorithmSelection
+          onSearch={handleResponseData}
+          onSearching={setIsSearching}
+          isSearching={isSearching}
+        />
         {/* Render response data berdasarkan tipe */}
-        {responseData && (
-          <div className="p-4 mt-4 rounded-lg">
+        {responseData && !isSearching && (
+          <div
+            className="p-4 mt-4 rounded-lg"
+            key={isSearching ? "Searching" : "Not Search"}
+          >
             {"initialPopulation" in responseData && (
               <>
                 <ResultDetail
